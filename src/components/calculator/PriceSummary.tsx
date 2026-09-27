@@ -34,7 +34,7 @@ export function PriceSummary({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 dark:border-[#2f3549] bg-white dark:bg-[#24283b] p-5 shadow-sm space-y-5 lg:sticky lg:top-24">
+    <div className="rounded-2xl border border-slate-200 dark:border-[#2f3549] bg-white dark:bg-[#24283b] p-5 shadow-sm space-y-5">
       {/* Selector de Margen de Ganancia */}
       <div>
         <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-[#9aa5ce] flex items-center justify-between mb-2.5">

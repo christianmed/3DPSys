@@ -309,8 +309,8 @@ export default function CalculatorPage() {
             />
           </div>
 
-          {/* COLUMNA DERECHA: Resultados, Desglose y Acciones (5 columnas en desktop, STICKY) */}
-          <div className="lg:col-span-5 space-y-5">
+          {/* COLUMNA DERECHA: Resultados, Desglose y Acciones (5 columnas en desktop, STICKY unificado) */}
+          <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-20">
             {/* Panel de Precios y Acciones (WhatsApp / PDF / Guardar) */}
             <PriceSummary
               breakdown={breakdown}
