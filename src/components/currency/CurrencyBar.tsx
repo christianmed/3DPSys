@@ -47,8 +47,8 @@ export function CurrencyBar({
   };
 
   return (
-    <div className="w-full border-b border-slate-200 dark:border-[#2f3549] bg-slate-50/90 dark:bg-[#1f2335]/70 py-2.5 px-4 sm:px-6 transition-colors">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
+    <div className="w-full border-b border-slate-200 dark:border-[#2f3549] bg-slate-50/90 dark:bg-[#1f2335]/70 py-2.5 transition-colors">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         {/* Etiqueta e Indicador */}
         <div className="flex items-center gap-2">
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-cyan-100 text-cyan-700 dark:bg-[#2ac3de]/15 dark:text-[#2ac3de]">
