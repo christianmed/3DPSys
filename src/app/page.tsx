@@ -17,20 +17,16 @@ import type {
   UserSettings,
 } from "@/types";
 
-import {
-  calculateCostBreakdown,
-  calculateCostPerGram,
-} from "@/lib/calculator/costingEngine";
+import { calculateCostBreakdown } from "@/lib/calculator/costingEngine";
 
 import {
   loadCachedExchangeRates,
   fetchLiveExchangeRates,
-  getActiveRateValue,
 } from "@/lib/currency/exchangeRateService";
 
 import { storageService } from "@/lib/storage/localStorageRepository";
 import { printQuotePdf } from "@/lib/export/pdfGenerator";
-import { Sparkles, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 export default function CalculatorPage() {
   const [darkMode, setDarkMode] = useState(true);
@@ -74,6 +70,14 @@ export default function CalculatorPage() {
   // Carga inicial en cliente
   useEffect(() => {
     setIsClient(true);
+
+    // Leer tema previo de localStorage o default dark
+    const savedTheme = localStorage.getItem("3dcalc_theme");
+    const isDark = savedTheme ? savedTheme === "dark" : true;
+    setDarkMode(isDark);
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.toggle("dark", isDark);
+    }
 
     async function loadInitialData() {
       try {
@@ -136,7 +140,7 @@ export default function CalculatorPage() {
     loadInitialData();
   }, []);
 
-  // Recálculo del desglose en tiempo real (puro y síncrono en memoria)
+  // Recálculo del desglose en tiempo real
   const breakdown = useMemo(() => {
     return calculateCostBreakdown(input);
   }, [input]);
@@ -236,25 +240,29 @@ export default function CalculatorPage() {
   };
 
   const toggleTheme = () => {
-    setDarkMode(!darkMode);
+    const nextTheme = !darkMode;
+    setDarkMode(nextTheme);
+    localStorage.setItem("3dcalc_theme", nextTheme ? "dark" : "light");
     if (typeof document !== "undefined") {
-      document.documentElement.classList.toggle("dark");
+      document.documentElement.classList.toggle("dark", nextTheme);
     }
   };
 
   if (!isClient) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#1a1b26] text-[#7aa2f7]">
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-[#1a1b26] text-blue-600 dark:text-[#7aa2f7]">
         <div className="text-center space-y-2">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#7aa2f7] border-t-transparent mx-auto" />
-          <p className="text-xs font-semibold">Cargando 3DCalc Venezuela...</p>
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-600 dark:border-[#7aa2f7] border-t-transparent mx-auto" />
+          <p className="text-xs font-semibold text-slate-700 dark:text-[#c0caf5]">
+            Cargando 3DCalc Venezuela...
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] transition-colors">
+    <div className="min-h-screen bg-slate-100/70 dark:bg-[#1a1b26] transition-colors">
       {/* Header con navegación y tema */}
       <Header darkMode={darkMode} onToggleTheme={toggleTheme} />
 
@@ -268,7 +276,7 @@ export default function CalculatorPage() {
 
       {/* Notificación de guardado exitoso */}
       {saveSuccessMessage && (
-        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-[#9ece6a] px-4 py-3 text-xs font-bold text-[#1a1b26] shadow-xl animate-in fade-in slide-in-from-bottom-3">
+        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-xs font-bold text-white shadow-xl animate-in fade-in slide-in-from-bottom-3">
           <CheckCircle2 className="h-4 w-4" />
           <span>¡Cotización guardada exitosamente en tu historial!</span>
         </div>
@@ -280,9 +288,9 @@ export default function CalculatorPage() {
           {/* COLUMNA IZQUIERDA: Formulario Modular (7 columnas en desktop) */}
           <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center justify-between pb-1">
-              <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-white flex items-center gap-2">
+              <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
                 <span>Parámetros de Impresión FDM</span>
-                <span className="rounded-md bg-[#7aa2f7]/20 px-2 py-0.5 text-[10px] font-bold text-[#7aa2f7] border border-[#7aa2f7]/30">
+                <span className="rounded-md bg-blue-50 dark:bg-[#7aa2f7]/20 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:text-[#7aa2f7] border border-blue-200 dark:border-[#7aa2f7]/30">
                   Taller
                 </span>
               </h2>
