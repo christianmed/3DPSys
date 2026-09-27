@@ -193,6 +193,22 @@ export default function CalculatorPage() {
     handleSelectMaterial(newMat);
   };
 
+  const handleUpdateMaterial = async (updatedMat: Material) => {
+    await storageService.saveMaterial(updatedMat);
+    const updated = await storageService.getMaterials();
+    setMaterials(updated);
+    handleSelectMaterial(updatedMat);
+  };
+
+  const handleDeleteMaterial = async (id: string) => {
+    await storageService.deleteMaterial(id);
+    const updated = await storageService.getMaterials();
+    setMaterials(updated);
+    if (selectedMaterialId === id && updated.length > 0) {
+      handleSelectMaterial(updated[0]);
+    }
+  };
+
   // Construir objeto Quote actual
   const currentQuote: Quote = useMemo(() => {
     const hours = input.print_hours;
@@ -306,6 +322,8 @@ export default function CalculatorPage() {
               onSelectMaterial={handleSelectMaterial}
               onSelectPrinter={handleSelectPrinter}
               onSaveNewMaterial={handleSaveNewMaterial}
+              onUpdateMaterial={handleUpdateMaterial}
+              onDeleteMaterial={handleDeleteMaterial}
             />
           </div>
 

@@ -16,6 +16,8 @@ interface CalculatorFormProps {
   onSelectMaterial: (material: Material) => void;
   onSelectPrinter: (printer: Printer) => void;
   onSaveNewMaterial: (material: Material) => void;
+  onUpdateMaterial?: (material: Material) => void;
+  onDeleteMaterial?: (id: string) => void;
 }
 
 export function CalculatorForm({
@@ -28,6 +30,8 @@ export function CalculatorForm({
   onSelectMaterial,
   onSelectPrinter,
   onSaveNewMaterial,
+  onUpdateMaterial,
+  onDeleteMaterial,
 }: CalculatorFormProps) {
   return (
     <div className="space-y-4">
@@ -46,7 +50,7 @@ export function CalculatorForm({
           />
         </div>
 
-        {/* Selector de Material con Flete Prorrateado */}
+        {/* Selector y Gestor Avanzado de Material con Flete Prorrateado */}
         <MaterialSelector
           materials={materials}
           selectedMaterialId={selectedMaterialId}
@@ -54,6 +58,8 @@ export function CalculatorForm({
           onSelectMaterial={onSelectMaterial}
           onCustomCostChange={(cost) => onInputChange({ cost_per_gram: cost })}
           onSaveNewMaterial={onSaveNewMaterial}
+          onUpdateMaterial={onUpdateMaterial}
+          onDeleteMaterial={onDeleteMaterial}
         />
 
         {/* Peso en gramos */}
