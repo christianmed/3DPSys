@@ -5,11 +5,21 @@ const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/context/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
+        accent: {
+          DEFAULT: "var(--accent-primary)",
+          hover: "var(--accent-hover)",
+          surface: "var(--accent-surface)",
+          border: "var(--accent-border)",
+          text: "var(--accent-text)",
+          ring: "var(--accent-ring)",
+          glow: "var(--accent-glow)",
+        },
         tokyo: {
           bg: "#1a1b26",
           surface: "#24283b",
@@ -32,7 +42,7 @@ const config: Config = {
       },
       boxShadow: {
         "card-soft": "0 8px 30px rgba(0, 0, 0, 0.25)",
-        "card-glow": "0 0 25px rgba(122, 162, 247, 0.15)",
+        "card-glow": "0 0 25px rgba(0, 184, 124, 0.15)",
       },
     },
   },

@@ -69,7 +69,7 @@ export default function HistoryPage() {
 
   return (
     <div className="min-h-screen bg-slate-100/70 dark:bg-[#1a1b26] transition-colors">
-      <Header darkMode={darkMode} onToggleTheme={toggleTheme} />
+      <Header />
 
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Cabecera de la sección */}
@@ -77,13 +77,13 @@ export default function HistoryPage() {
           <div>
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-xs text-blue-600 dark:text-[#7aa2f7] hover:text-blue-700 dark:hover:text-[#89b4fa] mb-2 font-medium"
+              className="inline-flex items-center gap-1.5 text-xs text-accent hover:opacity-80 mb-2 font-medium"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>Volver a la Calculadora</span>
             </Link>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <History className="h-6 w-6 text-blue-600 dark:text-[#7aa2f7]" />
+              <History className="h-6 w-6 text-accent" />
               Historial de Cotizaciones
             </h1>
             <p className="text-xs text-slate-500 dark:text-[#9aa5ce] mt-1">
@@ -99,7 +99,7 @@ export default function HistoryPage() {
               placeholder="Buscar por nombre de pieza..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-white dark:bg-[#24283b] pl-9 pr-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#565f89] focus:border-blue-600 dark:focus:border-[#7aa2f7] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-white dark:bg-[#24283b] pl-9 pr-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#565f89] focus:border-accent focus:outline-none"
             />
           </div>
         </div>
@@ -190,7 +190,7 @@ export default function HistoryPage() {
                           businessPhone: userSettings?.business_phone,
                         })
                       }
-                      className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-blue-600 dark:text-[#7aa2f7] hover:border-blue-500 transition-colors"
+                      className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-accent hover:border-accent transition-colors"
                       title="Descargar PDF"
                     >
                       <FileDown className="h-4 w-4" />

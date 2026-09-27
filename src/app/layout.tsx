@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
   title: "3DCalc Venezuela - Calculadora de Costos de Impresión 3D",
@@ -22,9 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark">
-      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-[#7aa2f7]/30 selection:text-white">
-        {children}
+    <html lang="es" className="dark" data-accent="emerald">
+      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-[var(--accent-primary)]/30 selection:text-white">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

@@ -27,7 +27,7 @@ export function CostBreakdownCard({
     <div className="rounded-2xl border border-slate-200 dark:border-[#2f3549] bg-white dark:bg-[#24283b] p-4 sm:p-5 shadow-sm space-y-4">
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2f3549] pb-3">
         <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-          <PieChart className="h-4 w-4 text-blue-600 dark:text-[#7aa2f7]" />
+          <PieChart className="h-4 w-4 text-accent" />
           Desglose de Costos de Fabricación
         </h3>
         <span className="text-xs font-mono font-bold text-slate-700 dark:text-[#c0caf5]">

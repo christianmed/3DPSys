@@ -263,8 +263,8 @@ export default function CalculatorPage() {
 
   return (
     <div className="min-h-screen bg-slate-100/70 dark:bg-[#1a1b26] transition-colors">
-      {/* Header con navegación y tema */}
-      <Header darkMode={darkMode} onToggleTheme={toggleTheme} />
+      {/* Header con navegación estilo cápsula, selector de acento y tema */}
+      <Header />
 
       {/* Barra de Tasas Cambiarias (BCV Euro, Dólar, Binance USDT) */}
       <CurrencyBar
@@ -290,7 +290,7 @@ export default function CalculatorPage() {
             <div className="flex items-center justify-between pb-1">
               <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
                 <span>Parámetros de Impresión FDM</span>
-                <span className="rounded-md bg-blue-50 dark:bg-[#7aa2f7]/20 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:text-[#7aa2f7] border border-blue-200 dark:border-[#7aa2f7]/30">
+                <span className="rounded-md bg-accent-surface text-accent-text border border-accent-border px-2 py-0.5 text-[10px] font-bold">
                   Taller
                 </span>
               </h2>
@@ -310,7 +310,17 @@ export default function CalculatorPage() {
           </div>
 
           {/* COLUMNA DERECHA: Resultados, Desglose y Acciones (5 columnas en desktop, STICKY unificado) */}
-          <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-20">
+          <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-20">
+            {/* Encabezado simétrico para nivelar la altura con la columna izquierda */}
+            <div className="flex items-center justify-between pb-1">
+              <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                <span>Margen y Beneficio</span>
+                <span className="rounded-md bg-accent-surface text-accent-text border border-accent-border px-2 py-0.5 text-[10px] font-bold">
+                  En Vivo
+                </span>
+              </h2>
+            </div>
+
             {/* Panel de Precios y Acciones (WhatsApp / PDF / Guardar) */}
             <PriceSummary
               breakdown={breakdown}

@@ -42,7 +42,7 @@ export function CalculatorForm({
             placeholder="ej. Engranaje Reductor, Soporte de Celular, Figura Coleccionable..."
             value={input.part_name}
             onChange={(e) => onInputChange({ part_name: e.target.value })}
-            className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#565f89] focus:border-blue-600 dark:focus:border-[#7aa2f7] focus:outline-none"
+            className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#565f89] focus:border-accent focus:outline-none"
           />
         </div>
 
@@ -62,7 +62,7 @@ export function CalculatorForm({
             <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-[#9aa5ce]">
               Peso estimado por el Laminador (Gramos)
             </label>
-            <span className="text-[11px] text-blue-600 dark:text-[#7aa2f7] font-mono">
+            <span className="text-[11px] text-accent font-mono">
               Orca / Bambu / Cura / PrusaSlicer
             </span>
           </div>
@@ -74,7 +74,7 @@ export function CalculatorForm({
               value={input.weight_grams || ""}
               onChange={(e) => onInputChange({ weight_grams: parseFloat(e.target.value) || 0 })}
               placeholder="0"
-              className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-10 text-base font-mono font-bold text-slate-900 dark:text-white focus:border-blue-600 dark:focus:border-[#7aa2f7] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-10 text-base font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
             />
             <span className="absolute right-3.5 top-3.5 text-xs font-semibold text-slate-400 dark:text-[#9aa5ce]">
               g
@@ -108,7 +108,7 @@ export function CalculatorForm({
                 min="0"
                 value={input.print_hours}
                 onChange={(e) => onInputChange({ print_hours: parseInt(e.target.value) || 0 })}
-                className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-12 text-sm font-mono font-bold text-slate-900 dark:text-white focus:border-blue-600 dark:focus:border-[#7aa2f7] focus:outline-none"
+                className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-12 text-sm font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
               />
               <span className="absolute right-3 top-3.5 text-xs text-slate-400 dark:text-[#9aa5ce]">
                 Horas
@@ -121,7 +121,7 @@ export function CalculatorForm({
                 max="59"
                 value={input.print_minutes}
                 onChange={(e) => onInputChange({ print_minutes: parseInt(e.target.value) || 0 })}
-                className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-12 text-sm font-mono font-bold text-slate-900 dark:text-white focus:border-blue-600 dark:focus:border-[#7aa2f7] focus:outline-none"
+                className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-12 text-sm font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
               />
               <span className="absolute right-3 top-3.5 text-xs text-slate-400 dark:text-[#9aa5ce]">
                 Minutos

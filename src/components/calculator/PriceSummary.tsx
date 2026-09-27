@@ -52,13 +52,13 @@ export function PriceSummary({
             onClick={() => handleSelectTier("COMPETITIVE", 25)}
             className={`rounded-xl p-2 text-center transition-all border ${
               selectedTier === "COMPETITIVE"
-                ? "border-blue-600 dark:border-[#7aa2f7] bg-blue-50 dark:bg-[#7aa2f7]/15 text-slate-900 dark:text-white font-bold"
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
             <div className="text-[10px] uppercase font-semibold">Competitivo</div>
             <div className="text-xs font-mono font-bold mt-0.5">+25%</div>
-            <div className="text-[11px] text-blue-600 dark:text-[#7aa2f7] font-mono mt-0.5">
+            <div className="text-[11px] text-accent font-mono mt-0.5">
               ${tiers.competitive.price_usd.toFixed(2)}
             </div>
           </button>
@@ -69,13 +69,13 @@ export function PriceSummary({
             onClick={() => handleSelectTier("STANDARD", 40)}
             className={`rounded-xl p-2 text-center transition-all border ${
               selectedTier === "STANDARD"
-                ? "border-blue-600 dark:border-[#7aa2f7] bg-blue-50 dark:bg-[#7aa2f7]/15 text-slate-900 dark:text-white font-bold"
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
             <div className="text-[10px] uppercase font-semibold">Estándar</div>
             <div className="text-xs font-mono font-bold mt-0.5">+40%</div>
-            <div className="text-[11px] text-blue-600 dark:text-[#7aa2f7] font-mono mt-0.5">
+            <div className="text-[11px] text-accent font-mono mt-0.5">
               ${tiers.standard.price_usd.toFixed(2)}
             </div>
           </button>
@@ -86,13 +86,13 @@ export function PriceSummary({
             onClick={() => handleSelectTier("PREMIUM", 60)}
             className={`rounded-xl p-2 text-center transition-all border ${
               selectedTier === "PREMIUM"
-                ? "border-blue-600 dark:border-[#7aa2f7] bg-blue-50 dark:bg-[#7aa2f7]/15 text-slate-900 dark:text-white font-bold"
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
             <div className="text-[10px] uppercase font-semibold">Premium</div>
             <div className="text-xs font-mono font-bold mt-0.5">+60%</div>
-            <div className="text-[11px] text-blue-600 dark:text-[#7aa2f7] font-mono mt-0.5">
+            <div className="text-[11px] text-accent font-mono mt-0.5">
               ${tiers.premium.price_usd.toFixed(2)}
             </div>
           </button>
@@ -103,13 +103,13 @@ export function PriceSummary({
             onClick={() => handleSelectTier("LUXURY", 80)}
             className={`rounded-xl p-2 text-center transition-all border ${
               selectedTier === "LUXURY"
-                ? "border-blue-600 dark:border-[#7aa2f7] bg-blue-50 dark:bg-[#7aa2f7]/15 text-slate-900 dark:text-white font-bold"
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
             <div className="text-[10px] uppercase font-semibold">Lujo</div>
             <div className="text-xs font-mono font-bold mt-0.5">+80%</div>
-            <div className="text-[11px] text-blue-600 dark:text-[#7aa2f7] font-mono mt-0.5">
+            <div className="text-[11px] text-accent font-mono mt-0.5">
               ${tiers.luxury.price_usd.toFixed(2)}
             </div>
           </button>
@@ -127,7 +127,7 @@ export function PriceSummary({
               setSelectedTier("CUSTOM");
               onMarginChange(parseInt(e.target.value) || 0);
             }}
-            className="w-full accent-blue-600 dark:accent-[#7aa2f7] cursor-pointer"
+            className="w-full accent-[var(--accent-primary)] cursor-pointer"
           />
           <div className="flex items-center gap-1 rounded-lg border border-slate-200 dark:border-[#3b4261] bg-slate-50 dark:bg-[#1a1b26] px-2 py-1">
             <input
@@ -157,7 +157,7 @@ export function PriceSummary({
               <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-mono">
                 ${breakdown.total_price_usd.toFixed(2)}
               </span>
-              <span className="text-sm font-semibold text-blue-400 dark:text-[#7aa2f7]">USD</span>
+              <span className="text-sm font-semibold text-accent">USD</span>
             </div>
             <div className="text-right">
               <span className="text-[11px] text-slate-400 dark:text-[#9aa5ce] block">Ganancia neta</span>
@@ -203,7 +203,7 @@ export function PriceSummary({
             onClick={onGeneratePdf}
             className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#24283b] hover:border-slate-300 dark:hover:border-[#3b4261] hover:bg-slate-100 dark:hover:bg-[#2f3549] py-2.5 px-3 text-xs font-semibold text-slate-700 dark:text-white transition-colors"
           >
-            <FileDown className="h-4 w-4 text-blue-600 dark:text-[#7aa2f7]" />
+            <FileDown className="h-4 w-4 text-accent" />
             <span>Descargar PDF</span>
           </button>
 

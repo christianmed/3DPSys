@@ -67,7 +67,7 @@ export function CurrencyBar({
             onClick={() => handleSelectType("BCV_EURO")}
             className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all ${
               rates.active_type === "BCV_EURO"
-                ? "bg-blue-600 text-white dark:bg-[#7aa2f7] dark:text-[#1a1b26] shadow-sm font-semibold"
+                ? "bg-accent text-white shadow-sm font-semibold"
                 : "bg-white dark:bg-[#24283b] text-slate-700 dark:text-[#c0caf5] border border-slate-200 dark:border-[#2f3549] hover:border-slate-300 dark:hover:border-[#3b4261]"
             }`}
           >
@@ -81,7 +81,7 @@ export function CurrencyBar({
             onClick={() => handleSelectType("BCV_USD")}
             className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all ${
               rates.active_type === "BCV_USD"
-                ? "bg-blue-600 text-white dark:bg-[#7aa2f7] dark:text-[#1a1b26] shadow-sm font-semibold"
+                ? "bg-accent text-white shadow-sm font-semibold"
                 : "bg-white dark:bg-[#24283b] text-slate-700 dark:text-[#c0caf5] border border-slate-200 dark:border-[#2f3549] hover:border-slate-300 dark:hover:border-[#3b4261]"
             }`}
           >
@@ -95,7 +95,7 @@ export function CurrencyBar({
             onClick={() => handleSelectType("BINANCE_USDT")}
             className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all ${
               rates.active_type === "BINANCE_USDT"
-                ? "bg-blue-600 text-white dark:bg-[#7aa2f7] dark:text-[#1a1b26] shadow-sm font-semibold"
+                ? "bg-accent text-white shadow-sm font-semibold"
                 : "bg-white dark:bg-[#24283b] text-slate-700 dark:text-[#c0caf5] border border-slate-200 dark:border-[#2f3549] hover:border-slate-300 dark:hover:border-[#3b4261]"
             }`}
           >
@@ -154,7 +154,7 @@ export function CurrencyBar({
             title="Actualizar tasas en vivo"
           >
             <RefreshCw
-              className={`h-3.5 w-3.5 ${isLoadingRates ? "animate-spin text-blue-600 dark:text-[#7aa2f7]" : ""}`}
+              className={`h-3.5 w-3.5 ${isLoadingRates ? "animate-spin text-accent" : ""}`}
             />
           </button>
         </div>
