@@ -296,7 +296,7 @@ export default function CalculatorPage() {
         <div className="text-center space-y-2">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-600 dark:border-[#7aa2f7] border-t-transparent mx-auto" />
           <p className="text-xs font-semibold text-slate-700 dark:text-[#c0caf5]">
-            Cargando 3DCalc Venezuela...
+            Cargando 3DPSys...
           </p>
         </div>
       </div>
@@ -330,11 +330,8 @@ export default function CalculatorPage() {
           {/* COLUMNA IZQUIERDA: Formulario Modular (7 columnas en desktop) */}
           <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center justify-between pb-1">
-              <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-                <span>Parámetros de Impresión FDM</span>
-                <span className="rounded-md bg-accent-surface text-accent-text border border-accent-border px-2 py-0.5 text-[10px] font-bold">
-                  Taller
-                </span>
+              <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                Parámetros de Impresión
               </h2>
             </div>
 
@@ -357,11 +354,8 @@ export default function CalculatorPage() {
           <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-20">
             {/* Encabezado simétrico para nivelar la altura con la columna izquierda */}
             <div className="flex items-center justify-between pb-1">
-              <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-                <span>Margen y Beneficio</span>
-                <span className="rounded-md bg-accent-surface text-accent-text border border-accent-border px-2 py-0.5 text-[10px] font-bold">
-                  En Vivo
-                </span>
+              <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                Margen y Beneficio
               </h2>
             </div>
 
