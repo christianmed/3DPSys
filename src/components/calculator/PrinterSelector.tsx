@@ -31,7 +31,8 @@ export function PrinterSelector({
   const [showCorpoelecFormula, setShowCorpoelecFormula] = useState(false);
 
   const selectedPrinter = printers.find((p) => p.id === selectedPrinterId);
-  const isSparkx = selectedPrinter?.name.toLowerCase().includes("sparkx");
+  const isSparkx = selectedPrinter?.id === "printer-creality-sparkx-i7";
+  const isBambu = selectedPrinter?.id === "printer-bambu-p1s";
 
   // Estimación mensual de referencia (8h/día, 30 días)
   const monthlyKwh = ((powerWatts || 400) * 8 * 30) / 1000;
@@ -49,10 +50,20 @@ export function PrinterSelector({
             Perfil Activo: Sparkx i7
           </span>
         )}
+        {isBambu && (
+          <span className="text-[11px] font-semibold text-cyan-600 dark:text-[#2ac3de] bg-cyan-50 dark:bg-cyan-950/40 px-2 py-0.5 rounded-full border border-cyan-200 dark:border-cyan-800/50">
+            Perfil Activo: Bambu P1S
+          </span>
+        )}
+        {!selectedPrinterId && (
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-[#9aa5ce] bg-slate-100 dark:bg-[#1f2335] px-2 py-0.5 rounded-full border border-slate-200 dark:border-[#2f3549]">
+            Parámetros Manuales
+          </span>
+        )}
       </div>
 
-      {/* Grid de impresoras */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+      {/* Grid de 2 impresoras oficiales */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         {printers.map((printer) => {
           const isSelected = printer.id === selectedPrinterId;
           return (
