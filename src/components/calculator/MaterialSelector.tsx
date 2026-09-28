@@ -12,9 +12,11 @@ import {
   X,
   Truck,
   DollarSign,
+  PackageOpen,
 } from "lucide-react";
 import type { Material, FilamentType } from "@/types";
 import { calculateCostPerGram } from "@/lib/calculator/costingEngine";
+import { NumericInput } from "@/components/ui/NumericInput";
 
 interface MaterialSelectorProps {
   materials: Material[];
@@ -45,9 +47,9 @@ export function MaterialSelector({
   const [brand, setBrand] = useState("");
   const [type, setType] = useState<FilamentType>("PLA");
   const [color, setColor] = useState("");
-  const [spoolPrice, setSpoolPrice] = useState<number>(22.5);
-  const [shippingCost, setShippingCost] = useState<number>(5.0);
-  const [spoolsCount, setSpoolsCount] = useState<number>(6);
+  const [spoolPrice, setSpoolPrice] = useState<number>(0);
+  const [shippingCost, setShippingCost] = useState<number>(0);
+  const [spoolsCount, setSpoolsCount] = useState<number>(1);
   const [netWeight, setNetWeight] = useState<number>(1000);
 
   const selectedMaterial =
@@ -67,9 +69,9 @@ export function MaterialSelector({
     setType("PLA");
     setBrand("");
     setColor("");
-    setSpoolPrice(22.5);
-    setShippingCost(5.0);
-    setSpoolsCount(6);
+    setSpoolPrice(0);
+    setShippingCost(0);
+    setSpoolsCount(1);
     setNetWeight(1000);
     setFormMode("new");
   };
@@ -143,10 +145,6 @@ export function MaterialSelector({
   // Eliminar material activo
   const handleDeleteCurrent = () => {
     if (!selectedMaterial || !onDeleteMaterial) return;
-    if (materials.length <= 1) {
-      alert("Debes mantener al menos un filamento en el catálogo.");
-      return;
-    }
     if (confirm(`¿Eliminar el perfil de filamento "${selectedMaterial.name}"?`)) {
       onDeleteMaterial(selectedMaterial.id);
     }
@@ -167,10 +165,10 @@ export function MaterialSelector({
             type="button"
             onClick={handleStartNew}
             className="flex items-center gap-1 rounded-lg border border-slate-200 dark:border-[#2f3549] bg-white dark:bg-[#24283b] px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-white hover:border-accent hover:text-accent transition-colors shadow-xs"
-            title="Registrar un nuevo filamento desde cero"
+            title="Registrar un nuevo filamento con cálculo de flete"
           >
             <Plus className="h-3.5 w-3.5 text-accent" />
-            <span>Nuevo</span>
+            <span>+ Filamento</span>
           </button>
 
           {selectedMaterial && (
@@ -195,7 +193,7 @@ export function MaterialSelector({
                 <span>Editar</span>
               </button>
 
-              {materials.length > 1 && onDeleteMaterial && (
+              {onDeleteMaterial && (
                 <button
                   type="button"
                   onClick={handleDeleteCurrent}
@@ -210,57 +208,86 @@ export function MaterialSelector({
         </div>
       </div>
 
-      {/* SELECTOR DESPLEGABLE DIRECTO (1 solo click para cambiar) */}
-      <div className="relative">
-        <select
-          value={selectedMaterialId}
-          onChange={(e) => {
-            const mat = materials.find((m) => m.id === e.target.value);
-            if (mat) onSelectMaterial(mat);
-          }}
-          className="w-full appearance-none rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-10 text-sm font-semibold text-slate-900 dark:text-white focus:border-accent focus:outline-none transition-colors"
-        >
-          {materials.map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.name} — ${(m.cost_per_gram * 1000).toFixed(2)}/kg (${m.cost_per_gram.toFixed(4)}/g)
-            </option>
-          ))}
-        </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-500 dark:text-[#9aa5ce]">
-          <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-          </svg>
-        </div>
-      </div>
-
-      {/* Ficha Resumen del Filamento Seleccionado con Flete Prorrateado */}
-      {selectedMaterial && formMode === "closed" && (
-        <div className="rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50/70 dark:bg-[#1f2335]/60 p-3 space-y-2">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-600 dark:text-[#9aa5ce] flex items-center gap-1">
-              <Truck className="h-3.5 w-3.5 text-cyan-600 dark:text-[#2ac3de]" />
-              Flete prorrateado:
-            </span>
-            <span className="font-mono font-medium text-slate-800 dark:text-slate-200">
-              ${(selectedMaterial.shipping_cost_usd / selectedMaterial.spools_in_shipment).toFixed(2)}/bobina
-              <span className="text-[10px] text-slate-400 dark:text-[#565f89] ml-1">
-                (${selectedMaterial.shipping_cost_usd.toFixed(2)} ÷ {selectedMaterial.spools_in_shipment} uds)
-              </span>
-            </span>
+      {/* Si no hay materiales registrados todavía */}
+      {materials.length === 0 && formMode === "closed" && (
+        <div className="rounded-xl border border-dashed border-slate-300 dark:border-[#3b4261] bg-slate-50/60 dark:bg-[#1f2335]/50 p-3.5 text-center space-y-2.5">
+          <div className="flex items-center justify-center gap-2 text-slate-500 dark:text-[#9aa5ce]">
+            <PackageOpen className="h-4 w-4 text-accent" />
+            <span className="text-xs font-medium">No hay filamentos registrados aún</span>
           </div>
+          <p className="text-[11px] text-slate-500 dark:text-[#7aa2f7] max-w-md mx-auto">
+            Registra tu bobina para calcular el costo real prorrateando flete/envío, o ingresa el costo por gramo directo abajo.
+          </p>
+          <div className="pt-1">
+            <button
+              type="button"
+              onClick={handleStartNew}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-accent-hover transition-colors"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span>Registrar mi primer filamento</span>
+            </button>
+          </div>
+        </div>
+      )}
 
-          <div className="flex items-center justify-between border-t border-slate-200/80 dark:border-[#2f3549]/80 pt-2 text-xs">
-            <span className="text-slate-600 dark:text-[#9aa5ce]">Costo real por gramo:</span>
-            <div className="flex items-center gap-1">
-              <DollarSign className="h-3 w-3 text-accent" />
-              <input
-                type="number"
-                step="0.0001"
-                min="0"
+      {/* SELECTOR DESPLEGABLE DIRECTO (si hay filamentos) */}
+      {materials.length > 0 && (
+        <div className="relative">
+          <select
+            value={selectedMaterialId}
+            onChange={(e) => {
+              const mat = materials.find((m) => m.id === e.target.value);
+              if (mat) onSelectMaterial(mat);
+            }}
+            className="w-full appearance-none rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-10 text-sm font-semibold text-slate-900 dark:text-white focus:border-accent focus:outline-none transition-colors"
+          >
+            {materials.map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.name} — ${(m.cost_per_gram * 1000).toFixed(2)}/kg (${m.cost_per_gram.toFixed(4)}/g)
+              </option>
+            ))}
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-500 dark:text-[#9aa5ce]">
+            <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
+              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+            </svg>
+          </div>
+        </div>
+      )}
+
+      {/* Ficha Resumen del Filamento o Entrada Directa de Costo por Gramo */}
+      {formMode === "closed" && (
+        <div className="rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50/70 dark:bg-[#1f2335]/60 p-3 space-y-2">
+          {selectedMaterial && (
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-slate-600 dark:text-[#9aa5ce] flex items-center gap-1">
+                <Truck className="h-3.5 w-3.5 text-cyan-600 dark:text-[#2ac3de]" />
+                Flete prorrateado:
+              </span>
+              <span className="font-mono font-medium text-slate-800 dark:text-slate-200">
+                ${(selectedMaterial.shipping_cost_usd / selectedMaterial.spools_in_shipment).toFixed(2)}/bobina
+                <span className="text-[10px] text-slate-400 dark:text-[#565f89] ml-1">
+                  (${selectedMaterial.shipping_cost_usd.toFixed(2)} ÷ {selectedMaterial.spools_in_shipment} uds)
+                </span>
+              </span>
+            </div>
+          )}
+
+          <div className={`flex items-center justify-between text-xs ${selectedMaterial ? "border-t border-slate-200/80 dark:border-[#2f3549]/80 pt-2" : ""}`}>
+            <span className="text-slate-600 dark:text-[#9aa5ce] font-medium">
+              Costo directo por gramo:
+            </span>
+            <div className="flex items-center gap-1.5">
+              <DollarSign className="h-3.5 w-3.5 text-accent" />
+              <NumericInput
                 value={costPerGram}
-                onChange={(e) => onCustomCostChange(parseFloat(e.target.value) || 0)}
-                className="w-24 rounded-lg bg-white dark:bg-[#24283b] px-2 py-1 text-right font-mono font-bold text-accent border border-slate-300 dark:border-[#3b4261] focus:border-accent focus:outline-none"
-                title="Puedes ajustar directamente el costo por gramo si lo deseas"
+                onChange={onCustomCostChange}
+                step="0.0001"
+                min={0}
+                placeholder="0.0000"
+                className="w-28 rounded-lg bg-white dark:bg-[#24283b] px-2.5 py-1 text-right font-mono font-bold text-accent border border-slate-300 dark:border-[#3b4261] focus:border-accent focus:outline-none"
+                title="Introduce directamente el costo por gramo en USD"
               />
               <span className="text-slate-500 dark:text-[#9aa5ce]">/g</span>
             </div>
@@ -320,7 +347,7 @@ export function MaterialSelector({
               </label>
               <input
                 type="text"
-                placeholder="eSun, Sunlu, Bambu..."
+                placeholder="Creality, eSun, Sunlu, Bambu..."
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
                 className="w-full rounded-lg border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#24283b] p-2 text-xs text-slate-900 dark:text-white focus:border-accent focus:outline-none"
@@ -333,7 +360,7 @@ export function MaterialSelector({
               </label>
               <input
                 type="text"
-                placeholder="Negro, Blanco, etc."
+                placeholder="Negro, Blanco, Gris, etc."
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
                 className="w-full rounded-lg border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#24283b] p-2 text-xs text-slate-900 dark:text-white focus:border-accent focus:outline-none"
@@ -353,13 +380,13 @@ export function MaterialSelector({
                 <label className="text-[10px] text-slate-500 dark:text-[#9aa5ce] block">
                   Precio Bobina ($)
                 </label>
-                <input
-                  type="number"
-                  step="0.5"
-                  min="0"
+                <NumericInput
                   value={spoolPrice}
-                  onChange={(e) => setSpoolPrice(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-md border border-slate-300 dark:border-[#3b4261] bg-white dark:bg-[#1a1b26] p-1.5 text-xs font-mono font-bold text-slate-900 dark:text-white"
+                  onChange={setSpoolPrice}
+                  step="0.5"
+                  min={0}
+                  placeholder="0.00"
+                  className="w-full rounded-md border border-slate-300 dark:border-[#3b4261] bg-white dark:bg-[#1a1b26] p-1.5 text-xs font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
                   required
                 />
               </div>
@@ -368,13 +395,13 @@ export function MaterialSelector({
                 <label className="text-[10px] text-slate-500 dark:text-[#9aa5ce] block">
                   Flete Total Pedido ($)
                 </label>
-                <input
-                  type="number"
-                  step="0.5"
-                  min="0"
+                <NumericInput
                   value={shippingCost}
-                  onChange={(e) => setShippingCost(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-md border border-slate-300 dark:border-[#3b4261] bg-white dark:bg-[#1a1b26] p-1.5 text-xs font-mono font-bold text-slate-900 dark:text-white"
+                  onChange={setShippingCost}
+                  step="0.5"
+                  min={0}
+                  placeholder="0.00"
+                  className="w-full rounded-md border border-slate-300 dark:border-[#3b4261] bg-white dark:bg-[#1a1b26] p-1.5 text-xs font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
                 />
               </div>
 
@@ -382,12 +409,13 @@ export function MaterialSelector({
                 <label className="text-[10px] text-slate-500 dark:text-[#9aa5ce] block">
                   Bobinas en pedido
                 </label>
-                <input
-                  type="number"
-                  min="1"
+                <NumericInput
                   value={spoolsCount}
-                  onChange={(e) => setSpoolsCount(parseInt(e.target.value) || 1)}
-                  className="w-full rounded-md border border-slate-300 dark:border-[#3b4261] bg-white dark:bg-[#1a1b26] p-1.5 text-xs font-mono font-bold text-slate-900 dark:text-white"
+                  onChange={setSpoolsCount}
+                  isInteger
+                  min={1}
+                  placeholder="1"
+                  className="w-full rounded-md border border-slate-300 dark:border-[#3b4261] bg-white dark:bg-[#1a1b26] p-1.5 text-xs font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
                   required
                 />
               </div>
@@ -396,13 +424,14 @@ export function MaterialSelector({
                 <label className="text-[10px] text-slate-500 dark:text-[#9aa5ce] block">
                   Peso Neto (g)
                 </label>
-                <input
-                  type="number"
-                  min="100"
-                  step="50"
+                <NumericInput
                   value={netWeight}
-                  onChange={(e) => setNetWeight(parseInt(e.target.value) || 1000)}
-                  className="w-full rounded-md border border-slate-300 dark:border-[#3b4261] bg-white dark:bg-[#1a1b26] p-1.5 text-xs font-mono font-bold text-slate-900 dark:text-white"
+                  onChange={setNetWeight}
+                  isInteger
+                  min={100}
+                  step="50"
+                  placeholder="1000"
+                  className="w-full rounded-md border border-slate-300 dark:border-[#3b4261] bg-white dark:bg-[#1a1b26] p-1.5 text-xs font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
                   required
                 />
               </div>

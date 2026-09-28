@@ -162,4 +162,58 @@ describe("costingEngine - Motor de Costeo 3D FDM", () => {
       expect(tiers.custom.price_ves).toBe(877.5);
     });
   });
+
+  describe("Fórmula Oficial CORPOELEC y Creality Sparkx i7", () => {
+    it("debe calcular el consumo eléctrico con la fórmula oficial (400W nominal a 110V para Sparkx i7)", () => {
+      // Consumo (kWh) = [ Potencia (W) * Horas ] / 1000
+      // 400W durante 2 horas y 30 min (2.5 horas) = (400 * 2.5) / 1000 = 1.0 kWh
+      // Tarifa Corpoelec = $0.04 USD/kWh -> Costo = $0.04 USD
+      const input: CostingInput = {
+        part_name: "Prototipo Sparkx i7",
+        weight_grams: 50,
+        cost_per_gram: 0.02,
+        print_hours: 2,
+        print_minutes: 30,
+        power_watts: 400, // Creality Sparkx i7 (110V)
+        electricity_kwh_rate: 0.04, // Tarifa Corpoelec
+        machine_hourly_rate: 0.35,
+        failure_risk_percent: 0,
+        labor_minutes: 0,
+        labor_hourly_rate: 0,
+        hardware_cost_usd: 0,
+        packaging_cost_usd: 0,
+        margin_percent: 0,
+        exchange_rate: 70.0,
+      };
+
+      const breakdown = calculateCostBreakdown(input);
+      expect(breakdown.electricity_cost).toBe(0.04);
+      expect(breakdown.machine_cost).toBe(0.88); // 2.5 * 0.35 = 0.875 redondeado a 0.88 USD
+    });
+
+    it("debe calcular correctamente el consumo con Sparkx i7 conectada a 220V (700W)", () => {
+      // 700W durante 3 horas = (700 * 3) / 1000 = 2.1 kWh
+      // Tarifa $0.04 USD/kWh -> Costo = 2.1 * 0.04 = $0.084 USD -> redondeado a $0.08 USD
+      const input: CostingInput = {
+        part_name: "Prototipo Sparkx i7 220V",
+        weight_grams: 80,
+        cost_per_gram: 0.025,
+        print_hours: 3,
+        print_minutes: 0,
+        power_watts: 700, // Creality Sparkx i7 (220V)
+        electricity_kwh_rate: 0.04,
+        machine_hourly_rate: 0.35,
+        failure_risk_percent: 0,
+        labor_minutes: 0,
+        labor_hourly_rate: 0,
+        hardware_cost_usd: 0,
+        packaging_cost_usd: 0,
+        margin_percent: 0,
+        exchange_rate: 70.0,
+      };
+
+      const breakdown = calculateCostBreakdown(input);
+      expect(breakdown.electricity_cost).toBe(0.08); // 0.084 redondeado a 2 decimales de moneda
+    });
+  });
 });

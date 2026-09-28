@@ -70,4 +70,20 @@ describe("Gestión de Materiales y Prorrateo de Flete", () => {
 
     expect(updatedCostPerGram).toBe(0.022); // ($20 + $2) / 1000g = 0.0220
   });
+
+  it("verifica que el catálogo inicial de materiales está vacío para que el usuario registre los suyos", async () => {
+    const { DEFAULT_MATERIALS } = await import("@/lib/storage/defaultData");
+    expect(DEFAULT_MATERIALS).toEqual([]);
+    expect(DEFAULT_MATERIALS.length).toBe(0);
+  });
+
+  it("verifica que la Creality Sparkx i7 (110V) es la primera impresora y la opción por defecto", async () => {
+    const { DEFAULT_PRINTERS } = await import("@/lib/storage/defaultData");
+    expect(DEFAULT_PRINTERS.length).toBeGreaterThan(0);
+    const firstPrinter = DEFAULT_PRINTERS[0];
+    expect(firstPrinter.id).toBe("printer-creality-sparkx-i7");
+    expect(firstPrinter.name).toContain("Creality Sparkx i7");
+    expect(firstPrinter.power_watts).toBe(400); // 400W nominal a 110V
+    expect(firstPrinter.is_default).toBe(true);
+  });
 });

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { MessageSquare, FileDown, BookmarkCheck, TrendingUp } from "lucide-react";
 import type { CostBreakdown, MarginTier } from "@/types";
 import { getSuggestedPrices } from "@/lib/calculator/costingEngine";
+import { NumericInput } from "@/components/ui/NumericInput";
 
 interface PriceSummaryProps {
   breakdown: CostBreakdown;
@@ -130,15 +131,16 @@ export function PriceSummary({
             className="w-full accent-[var(--accent-primary)] cursor-pointer"
           />
           <div className="flex items-center gap-1 rounded-lg border border-slate-200 dark:border-[#3b4261] bg-slate-50 dark:bg-[#1a1b26] px-2 py-1">
-            <input
-              type="number"
-              min="0"
-              max="500"
+            <NumericInput
               value={marginPercent}
-              onChange={(e) => {
+              onChange={(val) => {
                 setSelectedTier("CUSTOM");
-                onMarginChange(parseInt(e.target.value) || 0);
+                onMarginChange(val);
               }}
+              isInteger
+              min={0}
+              max={500}
+              placeholder="0"
               className="w-12 bg-transparent text-right font-mono text-xs font-bold text-slate-900 dark:text-white focus:outline-none"
             />
             <span className="text-xs text-slate-400 dark:text-[#9aa5ce]">%</span>
