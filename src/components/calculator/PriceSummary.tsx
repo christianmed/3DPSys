@@ -25,7 +25,7 @@ export function PriceSummary({
   onGeneratePdf,
   onSaveQuote,
 }: PriceSummaryProps) {
-  const [selectedTier, setSelectedTier] = useState<MarginTier>("STANDARD");
+  const [selectedTier, setSelectedTier] = useState<MarginTier | "NONE">("NONE");
 
   const tiers = getSuggestedPrices(breakdown.subtotal_cost, marginPercent, exchangeRate);
 

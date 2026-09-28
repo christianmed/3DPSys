@@ -59,7 +59,7 @@ export default function CalculatorPage() {
     labor_hourly_rate: 5.0,
     hardware_cost_usd: 0,
     packaging_cost_usd: 0,
-    margin_percent: 40,
+    margin_percent: 30, // Margen predeterminado 30%
     exchange_rate: 72.5,
   });
 
@@ -107,7 +107,7 @@ export default function CalculatorPage() {
           }));
         }
 
-        // Seleccionar impresora inicial
+        // Seleccionar impresora inicial (Sparkx i7 como predeterminada)
         const initialPrinter =
           loadedPrinters.find((p) => p.is_default) || loadedPrinters[0];
         if (initialPrinter) {
@@ -126,7 +126,7 @@ export default function CalculatorPage() {
             electricity_kwh_rate: loadedSettings.electricity_kwh_usd,
             failure_risk_percent: loadedSettings.default_failure_risk_percent,
             labor_hourly_rate: loadedSettings.default_labor_hourly_rate,
-            margin_percent: loadedSettings.default_margin_percent,
+            margin_percent: loadedSettings.default_margin_percent || 30,
           }));
         }
 
@@ -170,9 +170,24 @@ export default function CalculatorPage() {
     }
   };
 
-  // Manejo de cambios en el formulario
+  // Manejo de cambios en el formulario con deselección automática de impresora si cambian Watts o Desgaste
   const handleInputChange = (updates: Partial<CostingInput>) => {
-    setInput((prev) => ({ ...prev, ...updates }));
+    setInput((prev) => {
+      const next = { ...prev, ...updates };
+
+      if (selectedPrinterId && ("power_watts" in updates || "machine_hourly_rate" in updates)) {
+        const currentPrinter = printers.find((p) => p.id === selectedPrinterId);
+        if (currentPrinter) {
+          const nextWatts = "power_watts" in updates ? updates.power_watts : next.power_watts;
+          const nextRate = "machine_hourly_rate" in updates ? updates.machine_hourly_rate : next.machine_hourly_rate;
+          if (nextWatts !== currentPrinter.power_watts || nextRate !== currentPrinter.depreciation_hourly_rate) {
+            setSelectedPrinterId("");
+          }
+        }
+      }
+
+      return next;
+    });
   };
 
   const handleSelectMaterial = (mat: Material) => {
