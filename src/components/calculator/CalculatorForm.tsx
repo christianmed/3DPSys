@@ -5,6 +5,7 @@ import { Clock, Hammer, ShieldAlert } from "lucide-react";
 import type { CostingInput, Material, Printer } from "@/types";
 import { MaterialSelector } from "./MaterialSelector";
 import { PrinterSelector } from "./PrinterSelector";
+import { NumericInput } from "@/components/ui/NumericInput";
 
 interface CalculatorFormProps {
   input: CostingInput;
@@ -73,13 +74,12 @@ export function CalculatorForm({
             </span>
           </div>
           <div className="relative">
-            <input
-              type="number"
-              min="0"
-              step="1"
-              value={input.weight_grams || ""}
-              onChange={(e) => onInputChange({ weight_grams: parseFloat(e.target.value) || 0 })}
+            <NumericInput
+              value={input.weight_grams}
+              onChange={(val) => onInputChange({ weight_grams: val })}
               placeholder="0"
+              step="1"
+              min={0}
               className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-10 text-base font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
             />
             <span className="absolute right-3.5 top-3.5 text-xs font-semibold text-slate-400 dark:text-[#9aa5ce]">
@@ -96,9 +96,11 @@ export function CalculatorForm({
           selectedPrinterId={selectedPrinterId}
           powerWatts={input.power_watts}
           machineHourlyRate={input.machine_hourly_rate}
+          electricityKwhRate={input.electricity_kwh_rate}
           onSelectPrinter={onSelectPrinter}
           onPowerWattsChange={(watts) => onInputChange({ power_watts: watts })}
           onMachineRateChange={(rate) => onInputChange({ machine_hourly_rate: rate })}
+          onElectricityRateChange={(rate) => onInputChange({ electricity_kwh_rate: rate })}
         />
 
         {/* Tiempo de Impresión */}
@@ -109,11 +111,12 @@ export function CalculatorForm({
           </label>
           <div className="grid grid-cols-2 gap-2">
             <div className="relative">
-              <input
-                type="number"
-                min="0"
+              <NumericInput
                 value={input.print_hours}
-                onChange={(e) => onInputChange({ print_hours: parseInt(e.target.value) || 0 })}
+                onChange={(val) => onInputChange({ print_hours: val })}
+                isInteger
+                min={0}
+                placeholder="0"
                 className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-12 text-sm font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
               />
               <span className="absolute right-3 top-3.5 text-xs text-slate-400 dark:text-[#9aa5ce]">
@@ -121,12 +124,13 @@ export function CalculatorForm({
               </span>
             </div>
             <div className="relative">
-              <input
-                type="number"
-                min="0"
-                max="59"
+              <NumericInput
                 value={input.print_minutes}
-                onChange={(e) => onInputChange({ print_minutes: parseInt(e.target.value) || 0 })}
+                onChange={(val) => onInputChange({ print_minutes: val })}
+                isInteger
+                min={0}
+                max={59}
+                placeholder="0"
                 className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-3 pr-12 text-sm font-mono font-bold text-slate-900 dark:text-white focus:border-accent focus:outline-none"
               />
               <span className="absolute right-3 top-3.5 text-xs text-slate-400 dark:text-[#9aa5ce]">
@@ -179,26 +183,26 @@ export function CalculatorForm({
             <label className="text-[11px] text-slate-600 dark:text-[#9aa5ce] block mb-1">
               Tiempo Mano de Obra (Minutos)
             </label>
-            <input
-              type="number"
-              min="0"
-              step="5"
+            <NumericInput
               value={input.labor_minutes}
-              onChange={(e) => onInputChange({ labor_minutes: parseInt(e.target.value) || 0 })}
+              onChange={(val) => onInputChange({ labor_minutes: val })}
+              isInteger
+              step="5"
+              min={0}
+              placeholder="0"
               className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-2.5 text-xs font-mono font-bold text-slate-900 dark:text-white focus:outline-none"
-              placeholder="Preparación, retiro de soportes, lijado"
             />
           </div>
           <div>
             <label className="text-[11px] text-slate-600 dark:text-[#9aa5ce] block mb-1">
               Tarifa de Mano de Obra ($/Hora)
             </label>
-            <input
-              type="number"
-              min="0"
-              step="1"
+            <NumericInput
               value={input.labor_hourly_rate}
-              onChange={(e) => onInputChange({ labor_hourly_rate: parseFloat(e.target.value) || 0 })}
+              onChange={(val) => onInputChange({ labor_hourly_rate: val })}
+              step="0.5"
+              min={0}
+              placeholder="0.00"
               className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-2.5 text-xs font-mono font-bold text-slate-900 dark:text-white focus:outline-none"
             />
           </div>
@@ -210,12 +214,12 @@ export function CalculatorForm({
             <label className="text-[11px] text-slate-600 dark:text-[#9aa5ce] block mb-1">
               Hardware Extra (Tornillos, insertos, imanes) ($)
             </label>
-            <input
-              type="number"
-              min="0"
-              step="0.25"
+            <NumericInput
               value={input.hardware_cost_usd}
-              onChange={(e) => onInputChange({ hardware_cost_usd: parseFloat(e.target.value) || 0 })}
+              onChange={(val) => onInputChange({ hardware_cost_usd: val })}
+              step="0.25"
+              min={0}
+              placeholder="0.00"
               className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-2.5 text-xs font-mono font-bold text-slate-900 dark:text-white focus:outline-none"
             />
           </div>
@@ -223,12 +227,12 @@ export function CalculatorForm({
             <label className="text-[11px] text-slate-600 dark:text-[#9aa5ce] block mb-1">
               Embalaje (Caja, bolsa ziploc, etiqueta) ($)
             </label>
-            <input
-              type="number"
-              min="0"
-              step="0.25"
+            <NumericInput
               value={input.packaging_cost_usd}
-              onChange={(e) => onInputChange({ packaging_cost_usd: parseFloat(e.target.value) || 0 })}
+              onChange={(val) => onInputChange({ packaging_cost_usd: val })}
+              step="0.25"
+              min={0}
+              placeholder="0.00"
               className="w-full rounded-xl border border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] p-2.5 text-xs font-mono font-bold text-slate-900 dark:text-white focus:outline-none"
             />
           </div>

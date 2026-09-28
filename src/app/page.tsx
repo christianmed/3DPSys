@@ -46,19 +46,19 @@ export default function CalculatorPage() {
   const [selectedPrinterId, setSelectedPrinterId] = useState<string>("");
 
   const [input, setInput] = useState<CostingInput>({
-    part_name: "Soporte Técnico de Precisión",
-    weight_grams: 85,
-    cost_per_gram: 0.0233,
-    print_hours: 3,
-    print_minutes: 45,
-    power_watts: 160,
-    electricity_kwh_rate: 0.08,
+    part_name: "",
+    weight_grams: 0,
+    cost_per_gram: 0,
+    print_hours: 0,
+    print_minutes: 0,
+    power_watts: 400, // Creality Sparkx i7 (110V)
+    electricity_kwh_rate: 0.04, // Tarifa promedio Corpoelec
     machine_hourly_rate: 0.35,
     failure_risk_percent: 10,
-    labor_minutes: 15,
-    labor_hourly_rate: 6.0,
+    labor_minutes: 0,
+    labor_hourly_rate: 5.0,
     hardware_cost_usd: 0,
-    packaging_cost_usd: 0.5,
+    packaging_cost_usd: 0,
     margin_percent: 40,
     exchange_rate: 72.5,
   });
@@ -91,13 +91,19 @@ export default function CalculatorPage() {
         setMaterials(loadedMaterials);
         setUserSettings(loadedSettings);
 
-        // Seleccionar material inicial
+        // Seleccionar material inicial si existen en catálogo
         const initialMat = loadedMaterials[0];
         if (initialMat) {
           setSelectedMaterialId(initialMat.id);
           setInput((prev) => ({
             ...prev,
             cost_per_gram: initialMat.cost_per_gram,
+          }));
+        } else {
+          setSelectedMaterialId("");
+          setInput((prev) => ({
+            ...prev,
+            cost_per_gram: 0,
           }));
         }
 
@@ -204,8 +210,13 @@ export default function CalculatorPage() {
     await storageService.deleteMaterial(id);
     const updated = await storageService.getMaterials();
     setMaterials(updated);
-    if (selectedMaterialId === id && updated.length > 0) {
-      handleSelectMaterial(updated[0]);
+    if (selectedMaterialId === id) {
+      if (updated.length > 0) {
+        handleSelectMaterial(updated[0]);
+      } else {
+        setSelectedMaterialId("");
+        setInput((prev) => ({ ...prev, cost_per_gram: 0 }));
+      }
     }
   };
 
