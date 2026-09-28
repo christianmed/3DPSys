@@ -8,15 +8,15 @@ export interface WhatsAppMessageOptions {
 }
 
 /**
- * Genera un mensaje formateado con estilo visual y emojis listo para enviar por WhatsApp
+ * Genera un mensaje formateado con estilo visual y emojis universales compatible al 100% con WhatsApp Web y Móvil
  */
 export function formatWhatsAppQuoteMessage(options: WhatsAppMessageOptions): string {
   const { quote, paymentMethods, businessName = "Taller 3D", leadTimeDays = "2 a 3 días hábiles" } = options;
 
   const lines: string[] = [];
 
-  // Encabezado
-  lines.push(`🖨️ *PRESUPUESTO DE IMPRESIÓN 3D*`);
+  // Encabezado usando emoji universal 📋 (U+1F4CB)
+  lines.push(`📋 *PRESUPUESTO DE IMPRESIÓN 3D*`);
   lines.push(`*${businessName}*`);
   lines.push(`📅 _Fecha: ${new Date(quote.created_at).toLocaleDateString("es-VE")}_`);
   lines.push(``);
@@ -35,7 +35,7 @@ export function formatWhatsAppQuoteMessage(options: WhatsAppMessageOptions): str
   lines.push(``);
 
   // Inversión / Precios
-  lines.push(`💰 *Total a Invertir:*`);
+  lines.push(`💵 *Total a Invertir:*`);
   lines.push(`• *En Divisas:* *$${quote.final_price_usd.toFixed(2)} USD*`);
   lines.push(
     `• *En Bolívares:* *${quote.final_price_ves.toLocaleString("es-VE", {
@@ -52,19 +52,19 @@ export function formatWhatsAppQuoteMessage(options: WhatsAppMessageOptions): str
 
     if (paymentMethods.pago_movil?.enabled) {
       activePayments.push(
-        `💳 *Pago Móvil:*\n   Banco: ${paymentMethods.pago_movil.bank}\n   Teléfono: ${paymentMethods.pago_movil.phone}\n   C.I./RIF: ${paymentMethods.pago_movil.id_number}\n   Titular: ${paymentMethods.pago_movil.account_holder}`
+        `📱 *Pago Móvil:*\n   Banco: ${paymentMethods.pago_movil.bank}\n   Teléfono: ${paymentMethods.pago_movil.phone}\n   C.I./RIF: ${paymentMethods.pago_movil.id_number}\n   Titular: ${paymentMethods.pago_movil.account_holder}`
       );
     }
 
     if (paymentMethods.zelle?.enabled) {
       activePayments.push(
-        `💵 *Zelle:*\n   Correo: ${paymentMethods.zelle.email}\n   Titular: ${paymentMethods.zelle.account_holder}`
+        `🏦 *Zelle:*\n   Correo: ${paymentMethods.zelle.email}\n   Titular: ${paymentMethods.zelle.account_holder}`
       );
     }
 
     if (paymentMethods.binance?.enabled) {
       activePayments.push(
-        `🪙 *Binance Pay (USDT):*\n   Pay ID: ${paymentMethods.binance.pay_id}${
+        `⚡ *Binance Pay (USDT):*\n   Pay ID: ${paymentMethods.binance.pay_id}${
           paymentMethods.binance.nickname ? ` (${paymentMethods.binance.nickname})` : ""
         }`
       );
@@ -75,13 +75,13 @@ export function formatWhatsAppQuoteMessage(options: WhatsAppMessageOptions): str
     }
 
     if (activePayments.length > 0) {
-      lines.push(`🏦 *Métodos de Pago Aceptados:*`);
+      lines.push(`💳 *Métodos de Pago Aceptados:*`);
       lines.push(activePayments.join("\n\n"));
       lines.push(``);
     }
   }
 
-  lines.push(`_Presupuesto válido por 48 horas. ¿Confirmamos para comenzar con la fabricación?_ 👍`);
+  lines.push(`_Presupuesto válido por 48 horas. ¿Confirmamos para comenzar con la fabricación?_ ✅`);
 
   return lines.join("\n");
 }

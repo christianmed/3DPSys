@@ -47,8 +47,8 @@ export function WhatsAppExportModal({
     const encodedText = encodeURIComponent(formattedMessage);
     const cleanNumber = clientPhone.replace(/\D/g, "");
     const url = cleanNumber
-      ? `https://wa.me/${cleanNumber}?text=${encodedText}`
-      : `https://wa.me/?text=${encodedText}`;
+      ? `https://api.whatsapp.com/send?phone=${cleanNumber}&text=${encodedText}`
+      : `https://api.whatsapp.com/send?text=${encodedText}`;
 
     window.open(url, "_blank");
   };

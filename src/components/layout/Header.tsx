@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { History, Settings, Moon, Sun, LayoutGrid } from "lucide-react";
+import { History, Settings, Moon, Sun, LayoutGrid, Check } from "lucide-react";
 import { useTheme, ACCENT_COLORS } from "@/context/ThemeContext";
 
 interface HeaderProps {
@@ -81,11 +81,11 @@ export function Header({ darkMode: propDarkMode, onToggleTheme: propToggleTheme 
         </nav>
 
         {/* LADO DERECHO: Selector de Paleta de Acentos + Toggle Modo Oscuro/Claro */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
-          {/* Selector de color de acento rápido */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Selector de color de acento con espaciado generoso y checkmark interior */}
           <div
-            className="flex items-center gap-1 rounded-xl bg-slate-100 dark:bg-[#1f2335] p-1 px-1.5 sm:px-2 border border-slate-200 dark:border-[#2f3549] shadow-inner"
-            title="Seleccionar color de acento"
+            className="flex items-center gap-2 sm:gap-2.5 rounded-xl bg-slate-100 dark:bg-[#1f2335] p-1.5 px-2.5 sm:px-3 border border-slate-200 dark:border-[#2f3549] shadow-inner"
+            title="Seleccionar color de acento de la aplicación"
           >
             {ACCENT_COLORS.map((col) => {
               const isSelected = theme.accentColor === col.id;
@@ -97,13 +97,17 @@ export function Header({ darkMode: propDarkMode, onToggleTheme: propToggleTheme 
                   onClick={() => theme.setAccentColor(col.id)}
                   aria-label={col.name}
                   title={`${col.name}${isSelected ? " (Activo)" : ""}`}
-                  className={`h-4 w-4 sm:h-5 sm:w-5 rounded-full transition-all duration-150 flex items-center justify-center ${
+                  className={`h-5 w-5 sm:h-5 sm:w-5 rounded-full transition-all duration-150 flex items-center justify-center relative ${
                     isSelected
-                      ? "ring-2 ring-offset-2 ring-accent dark:ring-offset-[#1f2335] scale-110 shadow-sm"
-                      : "opacity-60 hover:opacity-100 hover:scale-110"
+                      ? "ring-2 ring-accent ring-offset-1 dark:ring-offset-[#1f2335] shadow-xs"
+                      : "opacity-60 hover:opacity-100 hover:scale-105"
                   }`}
                   style={{ backgroundColor: bgHex }}
-                />
+                >
+                  {isSelected && (
+                    <Check className="h-3 w-3 text-white stroke-[3.5] drop-shadow-xs" />
+                  )}
+                </button>
               );
             })}
           </div>
