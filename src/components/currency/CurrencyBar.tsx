@@ -112,6 +112,7 @@ export function CurrencyBar({
                 min="1"
                 value={manualInputValue}
                 onChange={(e) => setManualInputValue(e.target.value)}
+                onFocus={(e) => e.target.select()}
                 onKeyDown={(e) => e.key === "Enter" && handleSaveManual()}
                 className="w-16 bg-transparent text-xs font-mono font-bold text-slate-900 dark:text-white focus:outline-none"
                 autoFocus
