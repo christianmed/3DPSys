@@ -236,7 +236,7 @@ export function printQuotePdf(options: PdfDocumentOptions): void {
   }
 
   <div class="footer">
-    Documento generado electrónicamente por 3DCalc Venezuela. Los presupuestos en Bolívares se calculan a la tasa convenida a la fecha de emisión.
+    Documento generado electrónicamente por 3DPSys. Los presupuestos en Bolívares se calculan a la tasa convenida a la fecha de emisión.
   </div>
 
   <script>

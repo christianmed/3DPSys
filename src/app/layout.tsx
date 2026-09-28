@@ -3,10 +3,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
-  title: "3DCalc Venezuela - Calculadora de Costos de Impresión 3D",
+  title: "3DPSys - Sistema de Costos de Impresión 3D",
   description:
     "Herramienta profesional para calcular costos reales de impresión 3D en Venezuela en USD y Bolívares con tasas BCV y Binance.",
-  applicationName: "3DCalc",
+  applicationName: "3DPSys",
 };
 
 export const viewport: Viewport = {

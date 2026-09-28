@@ -64,7 +64,7 @@ export default function SettingsPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `3DCalc_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `3DPSys_Backup_${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };

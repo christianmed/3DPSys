@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { History, Settings, Moon, Sun, LayoutGrid, Check } from "lucide-react";
+import { History, Settings, Moon, Sun, LayoutGrid, Check, Calculator } from "lucide-react";
 import { useTheme, ACCENT_COLORS } from "@/context/ThemeContext";
 
 interface HeaderProps {
@@ -23,20 +23,17 @@ export function Header({ darkMode: propDarkMode, onToggleTheme: propToggleTheme 
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-[#2f3549] bg-white/95 dark:bg-[#1a1b26]/95 backdrop-blur-md transition-colors shadow-xs">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:px-6 lg:px-8">
         
-        {/* LADO IZQUIERDO: Marca con Avatar Squircle redondeado y badge coherente */}
+        {/* LADO IZQUIERDO: Marca 3DPSys con Avatar Squircle e icono de calculadora */}
         <div className="flex items-center gap-2 sm:gap-3">
           <Link href="/" className="flex items-center gap-2.5 group">
-            {/* Avatar Squircle con color de acento dinámico y texto blanco nítido */}
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-white font-black text-sm shadow-md transition-all group-hover:scale-105 active:scale-95">
-              <span className="font-extrabold tracking-tight">3D</span>
+            {/* Avatar Squircle con color de acento dinámico e icono de calculadora */}
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-white shadow-md transition-all group-hover:scale-105 active:scale-95">
+              <Calculator className="h-5 w-5" />
             </div>
 
-            {/* Identificador del Proyecto con borde redondeado armónico */}
-            <div className="hidden min-[420px]:flex items-center gap-2 rounded-xl bg-slate-100 dark:bg-[#1f2335] px-3 py-1.5 border border-slate-200 dark:border-[#2f3549] text-slate-800 dark:text-white font-bold text-xs sm:text-sm shadow-xs transition-colors">
-              <span>3DCalc VZLA</span>
-              <span className="rounded-md bg-accent-surface text-accent-text border border-accent-border px-1.5 py-0.5 text-[10px] font-bold">
-                🇻🇪 FDM
-              </span>
+            {/* Identificador del Proyecto 3DPSys */}
+            <div className="flex items-center gap-2 rounded-xl bg-slate-100 dark:bg-[#1f2335] px-3 py-1.5 border border-slate-200 dark:border-[#2f3549] text-slate-800 dark:text-white font-bold text-xs sm:text-sm shadow-xs transition-colors">
+              <span className="font-extrabold tracking-tight text-sm">3DPSys</span>
             </div>
           </Link>
         </div>

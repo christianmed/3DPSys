@@ -168,7 +168,7 @@ export function MaterialSelector({
             title="Registrar un nuevo filamento con cálculo de flete"
           >
             <Plus className="h-3.5 w-3.5 text-accent" />
-            <span>+ Filamento</span>
+            <span>Filamento</span>
           </button>
 
           {selectedMaterial && (
