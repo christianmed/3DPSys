@@ -7,10 +7,10 @@ import {
 } from "./defaultData";
 
 const KEYS = {
-  PRINTERS: "3dcalc_printers_v1",
-  MATERIALS: "3dcalc_materials_v1",
+  PRINTERS: "3dcalc_printers_v2",
+  MATERIALS: "3dcalc_materials_v2",
   QUOTES: "3dcalc_quotes_v1",
-  SETTINGS: "3dcalc_settings_v1",
+  SETTINGS: "3dcalc_settings_v2",
 };
 
 export class LocalStorageRepository implements IStorageRepository {
