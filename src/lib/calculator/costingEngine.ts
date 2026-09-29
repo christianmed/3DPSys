@@ -96,6 +96,34 @@ export function calculateCostBreakdown(input: CostingInput): CostBreakdown {
   };
 }
 
+/**
+ * Configuración centralizada de márgenes comerciales de 3DPSys.
+ * Modifica este objeto en cualquier momento para ajustar rápida y globalmente
+ * los porcentajes y etiquetas de los 4 niveles de venta.
+ */
+export const MARGIN_TIER_CONFIG = {
+  detal: {
+    id: "RETAIL" as const,
+    label: "Detal (1-11)",
+    percent: 60,
+  },
+  mayor: {
+    id: "WHOLESALE" as const,
+    label: "Mayor (12-49)",
+    percent: 40,
+  },
+  volumen: {
+    id: "VOLUME" as const,
+    label: "Volumen (50-99)",
+    percent: 30,
+  },
+  gran_mayor: {
+    id: "BULK" as const,
+    label: "Gran Mayor (100+)",
+    percent: 25,
+  },
+} as const;
+
 export interface SuggestedTier {
   name: string;
   margin_percent: number;
@@ -104,20 +132,20 @@ export interface SuggestedTier {
 }
 
 export interface SuggestedPrices {
-  competitive: SuggestedTier;
-  standard: SuggestedTier;
-  premium: SuggestedTier;
-  luxury: SuggestedTier;
+  detal: SuggestedTier; // 60% (1 a 11 piezas)
+  mayor: SuggestedTier; // 40% (12 a 49 piezas)
+  volumen: SuggestedTier; // 30% (50 a 99 piezas)
+  gran_mayor: SuggestedTier; // 25% (100+ piezas)
   custom: SuggestedTier;
 }
 
 /**
- * Genera la matriz de precios sugeridos basada en los 4 niveles de la industria
- * más el margen personalizado del maker.
+ * Genera la matriz de precios sugeridos basada en los 4 niveles de escala comercial
+ * (Detal 60%, Mayor 40%, Volumen 30%, Gran Mayor 25%) más el margen personalizado del maker.
  */
 export function getSuggestedPrices(
   subtotalCost: number,
-  customMarginPercent: number = 40,
+  customMarginPercent: number = MARGIN_TIER_CONFIG.detal.percent,
   exchangeRate: number = 1
 ): SuggestedPrices {
   const calculateTier = (name: string, margin: number): SuggestedTier => {
@@ -131,12 +159,18 @@ export function getSuggestedPrices(
     };
   };
 
+  const detal = calculateTier(MARGIN_TIER_CONFIG.detal.label, MARGIN_TIER_CONFIG.detal.percent);
+  const mayor = calculateTier(MARGIN_TIER_CONFIG.mayor.label, MARGIN_TIER_CONFIG.mayor.percent);
+  const volumen = calculateTier(MARGIN_TIER_CONFIG.volumen.label, MARGIN_TIER_CONFIG.volumen.percent);
+  const granMayor = calculateTier(MARGIN_TIER_CONFIG.gran_mayor.label, MARGIN_TIER_CONFIG.gran_mayor.percent);
+  const custom = calculateTier("Personalizado", Math.max(0, customMarginPercent));
+
   return {
-    competitive: calculateTier("Competitivo", 25),
-    standard: calculateTier("Estándar", 40),
-    premium: calculateTier("Premium", 60),
-    luxury: calculateTier("Lujo", 80),
-    custom: calculateTier("Personalizado", Math.max(0, customMarginPercent)),
+    detal,
+    mayor,
+    volumen,
+    gran_mayor: granMayor,
+    custom,
   };
 }
 

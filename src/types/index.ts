@@ -7,7 +7,7 @@ export type FilamentType = "PLA" | "PETG" | "ABS" | "ASA" | "TPU" | "NYLON" | "O
 
 export type ExchangeRateType = "BCV_EURO" | "BCV_USD" | "BINANCE_USDT" | "MANUAL";
 
-export type MarginTier = "COMPETITIVE" | "STANDARD" | "PREMIUM" | "LUXURY" | "CUSTOM";
+export type MarginTier = "RETAIL" | "WHOLESALE" | "VOLUME" | "BULK" | "CUSTOM";
 
 /**
  * Perfil de Impresora 3D
@@ -70,12 +70,12 @@ export interface CostingInput {
   power_watts: number;
   electricity_kwh_rate: number;
   machine_hourly_rate: number;
-  failure_risk_percent: number; // % de merma eléctrica (ej: 10)
+  failure_risk_percent: number; // % de merma eléctrica (ej: 15)
   labor_minutes: number;
   labor_hourly_rate: number;
   hardware_cost_usd: number;
   packaging_cost_usd: number;
-  margin_percent: number; // % margen de beneficio (ej: 40)
+  margin_percent: number; // % margen de beneficio (ej: 80)
   exchange_rate: number; // Tasa en VES por USD
 }
 
@@ -139,6 +139,7 @@ export interface ExchangeRateData {
   bcv_usd: number;
   binance_usdt: number;
   custom_rate: number;
+  is_custom_manual?: boolean;
   active_type: ExchangeRateType;
   active_value: number;
   last_updated: string;

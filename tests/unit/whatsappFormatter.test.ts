@@ -3,7 +3,7 @@ import { formatWhatsAppQuoteMessage } from "@/lib/export/whatsappFormatter";
 import type { Quote, PaymentMethodsConfig } from "@/types";
 
 describe("whatsappFormatter - Generador de mensaje para WhatsApp", () => {
-  it("debe estructurar el mensaje con precio en USD, precio en Bs y datos de pago móvil", () => {
+  it("debe estructurar el mensaje sin emojis, con separadores, precio en Bs primero, precio especial en divisas y datos bancarios copiables", () => {
     const mockQuote: Quote = {
       id: "quote-1",
       part_name: "Soporte GPS Moto",
@@ -38,12 +38,33 @@ describe("whatsappFormatter - Generador de mensaje para WhatsApp", () => {
       businessName: "Taller Maker 3D",
     });
 
+    // Validar encabezado y separadores
+    expect(message).toContain("==============================");
+    expect(message).toContain("------------------------------");
+    expect(message).toContain("*PRESUPUESTO DE IMPRESIÓN 3D*");
+    expect(message).toContain("*Taller Maker 3D*");
+
+    // Validar detalles del proyecto
     expect(message).toContain("Soporte GPS Moto");
     expect(message).toContain("PETG Sunlu Gris");
-    expect(message).toContain("$12.50 USD");
-    expect(message).toContain("812,50 Bs.");
-    expect(message).toContain("65.00 Bs/$");
-    expect(message).toContain("Banesco");
-    expect(message).toContain("0412-1112233");
+    expect(message).toContain("~85 g");
+    expect(message).toContain("3h 40m");
+
+    // Validar precios (Bolívares primero y divisas como precio especial)
+    expect(message).toContain("> *Total en Bolívares:* *812,50 Bs.*");
+    expect(message).toContain("> *Precio especial en divisas:* *$12.50 USD*");
+
+    // Validar que NO aparezca la tasa de cambio aplicada
+    expect(message).not.toContain("Tasa aplicada");
+    expect(message).not.toContain("Bs/$");
+
+    // Validar datos de pago móvil con monoespaciado para fácil copiado
+    expect(message).toContain("`Banesco`");
+    expect(message).toContain("`0412-1112233`");
+    expect(message).toContain("`V-19876543`");
+    expect(message).toContain("Pedro Pérez");
+
+    // Validar ausencia de emojis
+    expect(message).not.toMatch(/[\u{1F300}-\u{1F9FF}]/u);
   });
 });

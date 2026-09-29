@@ -39,6 +39,7 @@ export function CurrencyBar({
       onRateChange({
         ...rates,
         custom_rate: val,
+        is_custom_manual: true,
         active_type: "MANUAL",
         active_value: val,
       });
@@ -103,7 +104,7 @@ export function CurrencyBar({
             <span className="font-mono font-bold">{rates.binance_usdt.toFixed(2)}</span>
           </button>
 
-          {/* Tasa Manual / Personalizada */}
+          {/* Tasa Manual / Personalizada (BCV +16% por defecto) */}
           {isEditingManual ? (
             <div className="flex items-center gap-1 rounded-lg border border-blue-500 dark:border-[#7aa2f7] bg-white dark:bg-[#24283b] px-1.5 py-0.5">
               <input
@@ -130,6 +131,7 @@ export function CurrencyBar({
             <button
               type="button"
               onClick={() => {
+                setManualInputValue(rates.custom_rate.toString());
                 handleSelectType("MANUAL");
                 setIsEditingManual(true);
               }}
@@ -138,7 +140,7 @@ export function CurrencyBar({
                   ? "bg-cyan-600 text-white dark:bg-[#2ac3de] dark:text-[#1a1b26] font-semibold"
                   : "bg-white dark:bg-[#24283b] text-slate-700 dark:text-[#c0caf5] border border-slate-200 dark:border-[#2f3549] hover:border-slate-300 dark:hover:border-[#3b4261]"
               }`}
-              title="Haz clic para escribir una tasa personalizada a mano"
+              title="Haz clic para escribir una tasa personalizada a mano (por defecto Dólar BCV + 16%)"
             >
               <Edit3 className="h-3 w-3" />
               <span>Manual:</span>
