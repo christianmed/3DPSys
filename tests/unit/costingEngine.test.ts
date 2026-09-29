@@ -128,33 +128,37 @@ describe("costingEngine - Motor de Costeo 3D FDM", () => {
     });
   });
 
-  describe("getSuggestedPrices (Niveles de margen de ganancia)", () => {
-    it("debe calcular los 4 tiers estándar y el personalizado correctamente", () => {
+  describe("getSuggestedPrices (Niveles de margen de ganancia - Opción A)", () => {
+    it("debe calcular los 4 tiers comerciales (Detal, Mayor, Volumen, Gran Mayor) y el personalizado correctamente", () => {
       const subtotal = 10.0;
       const customMargin = 35;
       const rate = 65.0;
 
       const tiers = getSuggestedPrices(subtotal, customMargin, rate);
 
-      // Competitivo (25%) -> 10 * 1.25 = 12.50 USD
-      expect(tiers.competitive.margin_percent).toBe(25);
+      // Gran Mayor (25%) -> 10 * 1.25 = 12.50 USD
+      expect(tiers.gran_mayor.margin_percent).toBe(25);
+      expect(tiers.gran_mayor.price_usd).toBe(12.5);
+      expect(tiers.gran_mayor.price_ves).toBe(812.5);
       expect(tiers.competitive.price_usd).toBe(12.5);
-      expect(tiers.competitive.price_ves).toBe(812.5);
 
-      // Estándar (40%) -> 10 * 1.40 = 14.00 USD
-      expect(tiers.standard.margin_percent).toBe(40);
-      expect(tiers.standard.price_usd).toBe(14.0);
-      expect(tiers.standard.price_ves).toBe(910.0);
+      // Volumen (30%) -> 10 * 1.30 = 13.00 USD
+      expect(tiers.volumen.margin_percent).toBe(30);
+      expect(tiers.volumen.price_usd).toBe(13.0);
+      expect(tiers.volumen.price_ves).toBe(845.0);
+      expect(tiers.standard.price_usd).toBe(13.0);
 
-      // Premium (60%) -> 10 * 1.60 = 16.00 USD
-      expect(tiers.premium.margin_percent).toBe(60);
+      // Mayor (60%) -> 10 * 1.60 = 16.00 USD
+      expect(tiers.mayor.margin_percent).toBe(60);
+      expect(tiers.mayor.price_usd).toBe(16.0);
+      expect(tiers.mayor.price_ves).toBe(1040.0);
       expect(tiers.premium.price_usd).toBe(16.0);
-      expect(tiers.premium.price_ves).toBe(1040.0);
 
-      // Lujo (80%) -> 10 * 1.80 = 18.00 USD
-      expect(tiers.luxury.margin_percent).toBe(80);
+      // Detal (80%) -> 10 * 1.80 = 18.00 USD
+      expect(tiers.detal.margin_percent).toBe(80);
+      expect(tiers.detal.price_usd).toBe(18.0);
+      expect(tiers.detal.price_ves).toBe(1170.0);
       expect(tiers.luxury.price_usd).toBe(18.0);
-      expect(tiers.luxury.price_ves).toBe(1170.0);
 
       // Personalizado (35%) -> 10 * 1.35 = 13.50 USD
       expect(tiers.custom.margin_percent).toBe(35);

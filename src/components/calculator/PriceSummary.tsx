@@ -47,71 +47,71 @@ export function PriceSummary({
         </label>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-2">
-          {/* Competitivo */}
+          {/* Detal (1-11 piezas) */}
           <button
             type="button"
-            onClick={() => handleSelectTier("COMPETITIVE", 25)}
+            onClick={() => handleSelectTier("RETAIL", 80)}
             className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "COMPETITIVE"
-                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
+              selectedTier === "RETAIL" || (selectedTier === "NONE" && marginPercent === 80)
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
-            <div className="text-[10px] uppercase font-semibold">Competitivo</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+25%</div>
-            <div className="text-[11px] text-accent font-mono mt-0.5">
-              ${tiers.competitive.price_usd.toFixed(2)}
-            </div>
-          </button>
-
-          {/* Estándar */}
-          <button
-            type="button"
-            onClick={() => handleSelectTier("STANDARD", 40)}
-            className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "STANDARD"
-                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
-                : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
-            }`}
-          >
-            <div className="text-[10px] uppercase font-semibold">Estándar</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+40%</div>
-            <div className="text-[11px] text-accent font-mono mt-0.5">
-              ${tiers.standard.price_usd.toFixed(2)}
-            </div>
-          </button>
-
-          {/* Premium */}
-          <button
-            type="button"
-            onClick={() => handleSelectTier("PREMIUM", 60)}
-            className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "PREMIUM"
-                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
-                : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
-            }`}
-          >
-            <div className="text-[10px] uppercase font-semibold">Premium</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+60%</div>
-            <div className="text-[11px] text-accent font-mono mt-0.5">
-              ${tiers.premium.price_usd.toFixed(2)}
-            </div>
-          </button>
-
-          {/* Lujo */}
-          <button
-            type="button"
-            onClick={() => handleSelectTier("LUXURY", 80)}
-            className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "LUXURY"
-                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
-                : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
-            }`}
-          >
-            <div className="text-[10px] uppercase font-semibold">Lujo</div>
+            <div className="text-[10px] uppercase font-semibold">Detal (1-11)</div>
             <div className="text-xs font-mono font-bold mt-0.5">+80%</div>
             <div className="text-[11px] text-accent font-mono mt-0.5">
-              ${tiers.luxury.price_usd.toFixed(2)}
+              ${tiers.detal.price_usd.toFixed(2)}
+            </div>
+          </button>
+
+          {/* Mayor (12-49 piezas) */}
+          <button
+            type="button"
+            onClick={() => handleSelectTier("WHOLESALE", 60)}
+            className={`rounded-xl p-2 text-center transition-all border ${
+              selectedTier === "WHOLESALE" || (selectedTier === "NONE" && marginPercent === 60)
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
+                : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
+            }`}
+          >
+            <div className="text-[10px] uppercase font-semibold">Mayor (12-49)</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+60%</div>
+            <div className="text-[11px] text-accent font-mono mt-0.5">
+              ${tiers.mayor.price_usd.toFixed(2)}
+            </div>
+          </button>
+
+          {/* Volumen (50-99 piezas) */}
+          <button
+            type="button"
+            onClick={() => handleSelectTier("VOLUME", 30)}
+            className={`rounded-xl p-2 text-center transition-all border ${
+              selectedTier === "VOLUME" || (selectedTier === "NONE" && marginPercent === 30)
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
+                : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
+            }`}
+          >
+            <div className="text-[10px] uppercase font-semibold">Volumen (50-99)</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+30%</div>
+            <div className="text-[11px] text-accent font-mono mt-0.5">
+              ${tiers.volumen.price_usd.toFixed(2)}
+            </div>
+          </button>
+
+          {/* Gran Mayor (100+ piezas) */}
+          <button
+            type="button"
+            onClick={() => handleSelectTier("BULK", 25)}
+            className={`rounded-xl p-2 text-center transition-all border ${
+              selectedTier === "BULK" || (selectedTier === "NONE" && marginPercent === 25)
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
+                : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
+            }`}
+          >
+            <div className="text-[10px] uppercase font-semibold">Gran Mayor (100+)</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+25%</div>
+            <div className="text-[11px] text-accent font-mono mt-0.5">
+              ${tiers.gran_mayor.price_usd.toFixed(2)}
             </div>
           </button>
         </div>

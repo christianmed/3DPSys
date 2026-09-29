@@ -104,20 +104,27 @@ export interface SuggestedTier {
 }
 
 export interface SuggestedPrices {
+  // Escala de márgenes aprobada (Opción A)
+  detal: SuggestedTier; // 80% (1 a 11 piezas)
+  mayor: SuggestedTier; // 60% (12 a 49 piezas)
+  volumen: SuggestedTier; // 30% (50 a 99 piezas)
+  gran_mayor: SuggestedTier; // 25% (100+ piezas)
+  custom: SuggestedTier;
+
+  // Compatibilidad con código previo
   competitive: SuggestedTier;
   standard: SuggestedTier;
   premium: SuggestedTier;
   luxury: SuggestedTier;
-  custom: SuggestedTier;
 }
 
 /**
- * Genera la matriz de precios sugeridos basada en los 4 niveles de la industria
- * más el margen personalizado del maker.
+ * Genera la matriz de precios sugeridos basada en los 4 niveles de escala comercial
+ * (Detal 80%, Mayor 60%, Volumen 30%, Gran Mayor 25%) más el margen personalizado del maker.
  */
 export function getSuggestedPrices(
   subtotalCost: number,
-  customMarginPercent: number = 40,
+  customMarginPercent: number = 80,
   exchangeRate: number = 1
 ): SuggestedPrices {
   const calculateTier = (name: string, margin: number): SuggestedTier => {
@@ -131,12 +138,23 @@ export function getSuggestedPrices(
     };
   };
 
+  const detal = calculateTier("Detal (1-11)", 80);
+  const mayor = calculateTier("Mayor (12-49)", 60);
+  const volumen = calculateTier("Volumen (50-99)", 30);
+  const granMayor = calculateTier("Gran Mayor (100+)", 25);
+  const custom = calculateTier("Personalizado", Math.max(0, customMarginPercent));
+
   return {
-    competitive: calculateTier("Competitivo", 25),
-    standard: calculateTier("Estándar", 40),
-    premium: calculateTier("Premium", 60),
-    luxury: calculateTier("Lujo", 80),
-    custom: calculateTier("Personalizado", Math.max(0, customMarginPercent)),
+    detal,
+    mayor,
+    volumen,
+    gran_mayor: granMayor,
+    custom,
+    // Aliases
+    competitive: granMayor, // 25%
+    standard: volumen, // 30%
+    premium: mayor, // 60%
+    luxury: detal, // 80%
   };
 }
 

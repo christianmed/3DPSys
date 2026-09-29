@@ -7,7 +7,8 @@ export const DEFAULT_EXCHANGE_RATES: ExchangeRateData = {
   bcv_euro: 72.5,
   bcv_usd: 66.8,
   binance_usdt: 73.2,
-  custom_rate: 73.0,
+  custom_rate: Number((66.8 * 1.16).toFixed(2)), // 77.49 (Dólar BCV + 16% por defecto)
+  is_custom_manual: false,
   active_type: "BCV_EURO",
   active_value: 72.5,
   last_updated: new Date().toISOString(),
@@ -152,11 +153,13 @@ export async function fetchLiveExchangeRates(): Promise<ExchangeRateData> {
       // Ignorar fallo secundario de euro
     }
 
+    const autoCustomRate = Number((parsed.bcv_usd * 1.16).toFixed(2));
     const updated: ExchangeRateData = {
       ...current,
       bcv_usd: parsed.bcv_usd,
       bcv_euro: parsed.bcv_euro,
       binance_usdt: parsed.binance_usdt,
+      custom_rate: current.is_custom_manual ? current.custom_rate : autoCustomRate,
       last_updated: new Date().toISOString(),
     };
 
