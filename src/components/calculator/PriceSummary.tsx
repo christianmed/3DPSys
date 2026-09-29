@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { MessageSquare, FileDown, BookmarkCheck, TrendingUp } from "lucide-react";
 import type { CostBreakdown, MarginTier } from "@/types";
-import { getSuggestedPrices } from "@/lib/calculator/costingEngine";
+import { getSuggestedPrices, MARGIN_TIER_CONFIG } from "@/lib/calculator/costingEngine";
 import { NumericInput } from "@/components/ui/NumericInput";
 
 interface PriceSummaryProps {
@@ -50,15 +50,15 @@ export function PriceSummary({
           {/* Detal (1-11 piezas) */}
           <button
             type="button"
-            onClick={() => handleSelectTier("RETAIL", 80)}
+            onClick={() => handleSelectTier(MARGIN_TIER_CONFIG.detal.id, MARGIN_TIER_CONFIG.detal.percent)}
             className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "RETAIL" || (selectedTier === "NONE" && marginPercent === 80)
+              selectedTier === MARGIN_TIER_CONFIG.detal.id || (selectedTier === "NONE" && marginPercent === MARGIN_TIER_CONFIG.detal.percent)
                 ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
-            <div className="text-[10px] uppercase font-semibold">Detal (1-11)</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+80%</div>
+            <div className="text-[10px] uppercase font-semibold">{MARGIN_TIER_CONFIG.detal.label}</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+{MARGIN_TIER_CONFIG.detal.percent}%</div>
             <div className="text-[11px] text-accent font-mono mt-0.5">
               ${tiers.detal.price_usd.toFixed(2)}
             </div>
@@ -67,15 +67,15 @@ export function PriceSummary({
           {/* Mayor (12-49 piezas) */}
           <button
             type="button"
-            onClick={() => handleSelectTier("WHOLESALE", 60)}
+            onClick={() => handleSelectTier(MARGIN_TIER_CONFIG.mayor.id, MARGIN_TIER_CONFIG.mayor.percent)}
             className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "WHOLESALE" || (selectedTier === "NONE" && marginPercent === 60)
+              selectedTier === MARGIN_TIER_CONFIG.mayor.id || (selectedTier === "NONE" && marginPercent === MARGIN_TIER_CONFIG.mayor.percent)
                 ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
-            <div className="text-[10px] uppercase font-semibold">Mayor (12-49)</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+60%</div>
+            <div className="text-[10px] uppercase font-semibold">{MARGIN_TIER_CONFIG.mayor.label}</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+{MARGIN_TIER_CONFIG.mayor.percent}%</div>
             <div className="text-[11px] text-accent font-mono mt-0.5">
               ${tiers.mayor.price_usd.toFixed(2)}
             </div>
@@ -84,15 +84,15 @@ export function PriceSummary({
           {/* Volumen (50-99 piezas) */}
           <button
             type="button"
-            onClick={() => handleSelectTier("VOLUME", 30)}
+            onClick={() => handleSelectTier(MARGIN_TIER_CONFIG.volumen.id, MARGIN_TIER_CONFIG.volumen.percent)}
             className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "VOLUME" || (selectedTier === "NONE" && marginPercent === 30)
+              selectedTier === MARGIN_TIER_CONFIG.volumen.id || (selectedTier === "NONE" && marginPercent === MARGIN_TIER_CONFIG.volumen.percent)
                 ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
-            <div className="text-[10px] uppercase font-semibold">Volumen (50-99)</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+30%</div>
+            <div className="text-[10px] uppercase font-semibold">{MARGIN_TIER_CONFIG.volumen.label}</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+{MARGIN_TIER_CONFIG.volumen.percent}%</div>
             <div className="text-[11px] text-accent font-mono mt-0.5">
               ${tiers.volumen.price_usd.toFixed(2)}
             </div>
@@ -101,15 +101,15 @@ export function PriceSummary({
           {/* Gran Mayor (100+ piezas) */}
           <button
             type="button"
-            onClick={() => handleSelectTier("BULK", 25)}
+            onClick={() => handleSelectTier(MARGIN_TIER_CONFIG.gran_mayor.id, MARGIN_TIER_CONFIG.gran_mayor.percent)}
             className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "BULK" || (selectedTier === "NONE" && marginPercent === 25)
+              selectedTier === MARGIN_TIER_CONFIG.gran_mayor.id || (selectedTier === "NONE" && marginPercent === MARGIN_TIER_CONFIG.gran_mayor.percent)
                 ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
-            <div className="text-[10px] uppercase font-semibold">Gran Mayor (100+)</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+25%</div>
+            <div className="text-[10px] uppercase font-semibold">{MARGIN_TIER_CONFIG.gran_mayor.label}</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+{MARGIN_TIER_CONFIG.gran_mayor.percent}%</div>
             <div className="text-[11px] text-accent font-mono mt-0.5">
               ${tiers.gran_mayor.price_usd.toFixed(2)}
             </div>

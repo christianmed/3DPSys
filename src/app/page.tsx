@@ -59,7 +59,7 @@ export default function CalculatorPage() {
     labor_hourly_rate: 5.0,
     hardware_cost_usd: 0,
     packaging_cost_usd: 0,
-    margin_percent: 80, // Margen predeterminado Detal (80%)
+    margin_percent: 60, // Margen predeterminado Detal (60%)
     exchange_rate: 72.5,
   });
 

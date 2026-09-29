@@ -128,8 +128,8 @@ describe("costingEngine - Motor de Costeo 3D FDM", () => {
     });
   });
 
-  describe("getSuggestedPrices (Niveles de margen de ganancia - Opción A)", () => {
-    it("debe calcular los 4 tiers comerciales (Detal, Mayor, Volumen, Gran Mayor) y el personalizado correctamente", () => {
+  describe("getSuggestedPrices (Niveles de margen de ganancia: 60%, 40%, 30%, 25%)", () => {
+    it("debe calcular los 4 tiers comerciales (Detal 60%, Mayor 40%, Volumen 30%, Gran Mayor 25%) y el personalizado correctamente", () => {
       const subtotal = 10.0;
       const customMargin = 35;
       const rate = 65.0;
@@ -146,15 +146,15 @@ describe("costingEngine - Motor de Costeo 3D FDM", () => {
       expect(tiers.volumen.price_usd).toBe(13.0);
       expect(tiers.volumen.price_ves).toBe(845.0);
 
-      // Mayor (60%) -> 10 * 1.60 = 16.00 USD
-      expect(tiers.mayor.margin_percent).toBe(60);
-      expect(tiers.mayor.price_usd).toBe(16.0);
-      expect(tiers.mayor.price_ves).toBe(1040.0);
+      // Mayor (40%) -> 10 * 1.40 = 14.00 USD
+      expect(tiers.mayor.margin_percent).toBe(40);
+      expect(tiers.mayor.price_usd).toBe(14.0);
+      expect(tiers.mayor.price_ves).toBe(910.0);
 
-      // Detal (80%) -> 10 * 1.80 = 18.00 USD
-      expect(tiers.detal.margin_percent).toBe(80);
-      expect(tiers.detal.price_usd).toBe(18.0);
-      expect(tiers.detal.price_ves).toBe(1170.0);
+      // Detal (60%) -> 10 * 1.60 = 16.00 USD
+      expect(tiers.detal.margin_percent).toBe(60);
+      expect(tiers.detal.price_usd).toBe(16.0);
+      expect(tiers.detal.price_ves).toBe(1040.0);
 
       // Personalizado (35%) -> 10 * 1.35 = 13.50 USD
       expect(tiers.custom.margin_percent).toBe(35);

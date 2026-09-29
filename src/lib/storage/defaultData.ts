@@ -150,7 +150,7 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   electricity_kwh_usd: 0.04, // Tarifa Corpoelec promedio residencial/comercial en Venezuela (~$3-$5 mensuales)
   default_failure_risk_percent: 15, // 15% de merma de protección contra cortes y fallas
   default_labor_hourly_rate: 5.0, // $5.00 por hora de mano de obra
-  default_margin_percent: 80, // 80% margen predeterminado (Detal 1-11 piezas)
+  default_margin_percent: 60, // 60% margen predeterminado (Detal 1-11 piezas)
   exchange_rates: DEFAULT_EXCHANGE_RATES,
   payment_methods: {
     pago_movil: {

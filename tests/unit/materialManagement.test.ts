@@ -115,9 +115,9 @@ describe("Gestión de Materiales y Prorrateo de Flete", () => {
     expect(bambu.is_default).toBe(false);
   });
 
-  it("verifica que el margen de beneficio por defecto es 80% (Detal) y la merma de fallo es 15%", async () => {
+  it("verifica que el margen de beneficio por defecto es 60% (Detal) y la merma de fallo es 15%", async () => {
     const { DEFAULT_USER_SETTINGS } = await import("@/lib/storage/defaultData");
-    expect(DEFAULT_USER_SETTINGS.default_margin_percent).toBe(80);
+    expect(DEFAULT_USER_SETTINGS.default_margin_percent).toBe(60);
     expect(DEFAULT_USER_SETTINGS.default_failure_risk_percent).toBe(15);
   });
 });
