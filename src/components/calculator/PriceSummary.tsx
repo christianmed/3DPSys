@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { MessageSquare, FileDown, BookmarkCheck, TrendingUp } from "lucide-react";
 import type { CostBreakdown, MarginTier } from "@/types";
-import { getSuggestedPrices } from "@/lib/calculator/costingEngine";
+import { getSuggestedPrices, MARGIN_TIER_CONFIG } from "@/lib/calculator/costingEngine";
 import { NumericInput } from "@/components/ui/NumericInput";
 
 interface PriceSummaryProps {
@@ -47,71 +47,71 @@ export function PriceSummary({
         </label>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-2">
-          {/* Competitivo */}
+          {/* Detal (1-11 piezas) */}
           <button
             type="button"
-            onClick={() => handleSelectTier("COMPETITIVE", 25)}
+            onClick={() => handleSelectTier(MARGIN_TIER_CONFIG.detal.id, MARGIN_TIER_CONFIG.detal.percent)}
             className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "COMPETITIVE"
-                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
+              selectedTier === MARGIN_TIER_CONFIG.detal.id || (selectedTier === "NONE" && marginPercent === MARGIN_TIER_CONFIG.detal.percent)
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
-            <div className="text-[10px] uppercase font-semibold">Competitivo</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+25%</div>
+            <div className="text-[10px] uppercase font-semibold">{MARGIN_TIER_CONFIG.detal.label}</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+{MARGIN_TIER_CONFIG.detal.percent}%</div>
             <div className="text-[11px] text-accent font-mono mt-0.5">
-              ${tiers.competitive.price_usd.toFixed(2)}
+              ${tiers.detal.price_usd.toFixed(2)}
             </div>
           </button>
 
-          {/* Estándar */}
+          {/* Mayor (12-49 piezas) */}
           <button
             type="button"
-            onClick={() => handleSelectTier("STANDARD", 40)}
+            onClick={() => handleSelectTier(MARGIN_TIER_CONFIG.mayor.id, MARGIN_TIER_CONFIG.mayor.percent)}
             className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "STANDARD"
-                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
+              selectedTier === MARGIN_TIER_CONFIG.mayor.id || (selectedTier === "NONE" && marginPercent === MARGIN_TIER_CONFIG.mayor.percent)
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
-            <div className="text-[10px] uppercase font-semibold">Estándar</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+40%</div>
+            <div className="text-[10px] uppercase font-semibold">{MARGIN_TIER_CONFIG.mayor.label}</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+{MARGIN_TIER_CONFIG.mayor.percent}%</div>
             <div className="text-[11px] text-accent font-mono mt-0.5">
-              ${tiers.standard.price_usd.toFixed(2)}
+              ${tiers.mayor.price_usd.toFixed(2)}
             </div>
           </button>
 
-          {/* Premium */}
+          {/* Volumen (50-99 piezas) */}
           <button
             type="button"
-            onClick={() => handleSelectTier("PREMIUM", 60)}
+            onClick={() => handleSelectTier(MARGIN_TIER_CONFIG.volumen.id, MARGIN_TIER_CONFIG.volumen.percent)}
             className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "PREMIUM"
-                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
+              selectedTier === MARGIN_TIER_CONFIG.volumen.id || (selectedTier === "NONE" && marginPercent === MARGIN_TIER_CONFIG.volumen.percent)
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
-            <div className="text-[10px] uppercase font-semibold">Premium</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+60%</div>
+            <div className="text-[10px] uppercase font-semibold">{MARGIN_TIER_CONFIG.volumen.label}</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+{MARGIN_TIER_CONFIG.volumen.percent}%</div>
             <div className="text-[11px] text-accent font-mono mt-0.5">
-              ${tiers.premium.price_usd.toFixed(2)}
+              ${tiers.volumen.price_usd.toFixed(2)}
             </div>
           </button>
 
-          {/* Lujo */}
+          {/* Gran Mayor (100+ piezas) */}
           <button
             type="button"
-            onClick={() => handleSelectTier("LUXURY", 80)}
+            onClick={() => handleSelectTier(MARGIN_TIER_CONFIG.gran_mayor.id, MARGIN_TIER_CONFIG.gran_mayor.percent)}
             className={`rounded-xl p-2 text-center transition-all border ${
-              selectedTier === "LUXURY"
-                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs"
+              selectedTier === MARGIN_TIER_CONFIG.gran_mayor.id || (selectedTier === "NONE" && marginPercent === MARGIN_TIER_CONFIG.gran_mayor.percent)
+                ? "border-accent bg-accent-surface text-slate-900 dark:text-white font-bold shadow-xs ring-1 ring-accent"
                 : "border-slate-200 dark:border-[#2f3549] bg-slate-50 dark:bg-[#1a1b26] text-slate-600 dark:text-[#9aa5ce] hover:border-slate-300 dark:hover:text-white"
             }`}
           >
-            <div className="text-[10px] uppercase font-semibold">Lujo</div>
-            <div className="text-xs font-mono font-bold mt-0.5">+80%</div>
+            <div className="text-[10px] uppercase font-semibold">{MARGIN_TIER_CONFIG.gran_mayor.label}</div>
+            <div className="text-xs font-mono font-bold mt-0.5">+{MARGIN_TIER_CONFIG.gran_mayor.percent}%</div>
             <div className="text-[11px] text-accent font-mono mt-0.5">
-              ${tiers.luxury.price_usd.toFixed(2)}
+              ${tiers.gran_mayor.price_usd.toFixed(2)}
             </div>
           </button>
         </div>

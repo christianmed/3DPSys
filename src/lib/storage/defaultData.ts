@@ -7,7 +7,7 @@ export const DEFAULT_PRINTERS: Printer[] = [
     name: "Creality Sparkx i7 (110V)",
     brand: "Creality",
     power_watts: 400, // 400W nominal a 110V (700W a 220V)
-    depreciation_hourly_rate: 0.35, // Amortización y desgaste FDM de alta velocidad
+    depreciation_hourly_rate: 0.75, // Escenario B: Amortización técnica ($1.000 / 2.000h) + fondo repuestos ($0.25/h)
     is_default: true,
     created_at: new Date().toISOString(),
   },
@@ -16,7 +16,7 @@ export const DEFAULT_PRINTERS: Printer[] = [
     name: "Bambu Lab P1S / X1C",
     brand: "Bambu Lab",
     power_watts: 350,
-    depreciation_hourly_rate: 0.35,
+    depreciation_hourly_rate: 0.75,
     is_default: false,
     created_at: new Date().toISOString(),
   },
@@ -148,9 +148,9 @@ export const DEFAULT_MATERIALS: Material[] = [
 
 export const DEFAULT_USER_SETTINGS: UserSettings = {
   electricity_kwh_usd: 0.04, // Tarifa Corpoelec promedio residencial/comercial en Venezuela (~$3-$5 mensuales)
-  default_failure_risk_percent: 10, // 10% de merma de protección contra cortes y fallas
+  default_failure_risk_percent: 15, // 15% de merma de protección contra cortes y fallas
   default_labor_hourly_rate: 5.0, // $5.00 por hora de mano de obra
-  default_margin_percent: 30, // 30% margen predeterminado
+  default_margin_percent: 60, // 60% margen predeterminado (Detal 1-11 piezas)
   exchange_rates: DEFAULT_EXCHANGE_RATES,
   payment_methods: {
     pago_movil: {

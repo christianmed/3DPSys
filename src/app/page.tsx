@@ -53,13 +53,13 @@ export default function CalculatorPage() {
     print_minutes: 0,
     power_watts: 400, // Creality Sparkx i7 (110V)
     electricity_kwh_rate: 0.04, // Tarifa promedio Corpoelec
-    machine_hourly_rate: 0.35,
-    failure_risk_percent: 10,
+    machine_hourly_rate: 0.75, // Escenario B: Amortización técnica ($1.000 / 2.000h + repuestos)
+    failure_risk_percent: 15, // 15% merma / riesgo de fallo
     labor_minutes: 0,
     labor_hourly_rate: 5.0,
     hardware_cost_usd: 0,
     packaging_cost_usd: 0,
-    margin_percent: 30, // Margen predeterminado 30%
+    margin_percent: 60, // Margen predeterminado Detal (60%)
     exchange_rate: 72.5,
   });
 

@@ -7,10 +7,10 @@ import {
 } from "./defaultData";
 
 const KEYS = {
-  PRINTERS: "3dcalc_printers_v3",
+  PRINTERS: "3dcalc_printers_v4",
   MATERIALS: "3dcalc_materials_v3",
   QUOTES: "3dcalc_quotes_v1",
-  SETTINGS: "3dcalc_settings_v3",
+  SETTINGS: "3dcalc_settings_v4",
 };
 
 export class LocalStorageRepository implements IStorageRepository {
@@ -29,7 +29,20 @@ export class LocalStorageRepository implements IStorageRepository {
         localStorage.setItem(KEYS.PRINTERS, JSON.stringify(DEFAULT_PRINTERS));
         return DEFAULT_PRINTERS;
       }
-      return JSON.parse(stored);
+      const parsed: Printer[] = JSON.parse(stored);
+      // Sincronizar las impresoras oficiales del taller con los valores actuales del código
+      const synced = parsed.map((p) => {
+        const defaultMatch = DEFAULT_PRINTERS.find((dp) => dp.id === p.id);
+        if (defaultMatch) {
+          return {
+            ...p,
+            depreciation_hourly_rate: defaultMatch.depreciation_hourly_rate,
+            power_watts: defaultMatch.power_watts,
+          };
+        }
+        return p;
+      });
+      return synced;
     } catch (err) {
       console.error("Error al obtener impresoras de localStorage:", err);
       return DEFAULT_PRINTERS;

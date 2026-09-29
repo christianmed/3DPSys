@@ -60,5 +60,10 @@ describe("exchangeRateService - Servicio de Tasas Cambiarias para Venezuela", ()
       });
       expect(rate).toBe(68.0);
     });
+
+    it("la tasa manual por defecto debe ser exactamente Dólar BCV + 16%", () => {
+      const expected = Number((DEFAULT_EXCHANGE_RATES.bcv_usd * 1.16).toFixed(2));
+      expect(DEFAULT_EXCHANGE_RATES.custom_rate).toBe(expected);
+    });
   });
 });
