@@ -104,18 +104,11 @@ export interface SuggestedTier {
 }
 
 export interface SuggestedPrices {
-  // Escala de márgenes aprobada (Opción A)
   detal: SuggestedTier; // 80% (1 a 11 piezas)
   mayor: SuggestedTier; // 60% (12 a 49 piezas)
   volumen: SuggestedTier; // 30% (50 a 99 piezas)
   gran_mayor: SuggestedTier; // 25% (100+ piezas)
   custom: SuggestedTier;
-
-  // Compatibilidad con código previo
-  competitive: SuggestedTier;
-  standard: SuggestedTier;
-  premium: SuggestedTier;
-  luxury: SuggestedTier;
 }
 
 /**
@@ -150,11 +143,6 @@ export function getSuggestedPrices(
     volumen,
     gran_mayor: granMayor,
     custom,
-    // Aliases
-    competitive: granMayor, // 25%
-    standard: volumen, // 30%
-    premium: mayor, // 60%
-    luxury: detal, // 80%
   };
 }
 

@@ -7,7 +7,7 @@ export const DEFAULT_PRINTERS: Printer[] = [
     name: "Creality Sparkx i7 (110V)",
     brand: "Creality",
     power_watts: 400, // 400W nominal a 110V (700W a 220V)
-    depreciation_hourly_rate: 1.50, // Tarifa fija de taller por hora de máquina ($1.50/h)
+    depreciation_hourly_rate: 0.75, // Escenario B: Amortización técnica ($1.000 / 2.000h) + fondo repuestos ($0.25/h)
     is_default: true,
     created_at: new Date().toISOString(),
   },
@@ -16,7 +16,7 @@ export const DEFAULT_PRINTERS: Printer[] = [
     name: "Bambu Lab P1S / X1C",
     brand: "Bambu Lab",
     power_watts: 350,
-    depreciation_hourly_rate: 1.50,
+    depreciation_hourly_rate: 0.75,
     is_default: false,
     created_at: new Date().toISOString(),
   },

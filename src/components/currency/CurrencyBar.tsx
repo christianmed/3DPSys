@@ -143,7 +143,7 @@ export function CurrencyBar({
               title="Haz clic para escribir una tasa personalizada a mano (por defecto Dólar BCV + 16%)"
             >
               <Edit3 className="h-3 w-3" />
-              <span>BCV +16%:</span>
+              <span>Manual:</span>
               <span className="font-mono font-bold">{rates.custom_rate.toFixed(2)}</span>
             </button>
           )}

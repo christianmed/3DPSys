@@ -140,25 +140,21 @@ describe("costingEngine - Motor de Costeo 3D FDM", () => {
       expect(tiers.gran_mayor.margin_percent).toBe(25);
       expect(tiers.gran_mayor.price_usd).toBe(12.5);
       expect(tiers.gran_mayor.price_ves).toBe(812.5);
-      expect(tiers.competitive.price_usd).toBe(12.5);
 
       // Volumen (30%) -> 10 * 1.30 = 13.00 USD
       expect(tiers.volumen.margin_percent).toBe(30);
       expect(tiers.volumen.price_usd).toBe(13.0);
       expect(tiers.volumen.price_ves).toBe(845.0);
-      expect(tiers.standard.price_usd).toBe(13.0);
 
       // Mayor (60%) -> 10 * 1.60 = 16.00 USD
       expect(tiers.mayor.margin_percent).toBe(60);
       expect(tiers.mayor.price_usd).toBe(16.0);
       expect(tiers.mayor.price_ves).toBe(1040.0);
-      expect(tiers.premium.price_usd).toBe(16.0);
 
       // Detal (80%) -> 10 * 1.80 = 18.00 USD
       expect(tiers.detal.margin_percent).toBe(80);
       expect(tiers.detal.price_usd).toBe(18.0);
       expect(tiers.detal.price_ves).toBe(1170.0);
-      expect(tiers.luxury.price_usd).toBe(18.0);
 
       // Personalizado (35%) -> 10 * 1.35 = 13.50 USD
       expect(tiers.custom.margin_percent).toBe(35);

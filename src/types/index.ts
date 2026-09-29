@@ -7,16 +7,7 @@ export type FilamentType = "PLA" | "PETG" | "ABS" | "ASA" | "TPU" | "NYLON" | "O
 
 export type ExchangeRateType = "BCV_EURO" | "BCV_USD" | "BINANCE_USDT" | "MANUAL";
 
-export type MarginTier =
-  | "RETAIL"
-  | "WHOLESALE"
-  | "VOLUME"
-  | "BULK"
-  | "COMPETITIVE"
-  | "STANDARD"
-  | "PREMIUM"
-  | "LUXURY"
-  | "CUSTOM";
+export type MarginTier = "RETAIL" | "WHOLESALE" | "VOLUME" | "BULK" | "CUSTOM";
 
 /**
  * Perfil de Impresora 3D
